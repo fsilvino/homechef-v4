@@ -5,6 +5,8 @@
  */
 package br.ufsc.ine5608.homechef;
 
+import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
+
 /**
  *
  * @author Flávio
@@ -13,7 +15,6 @@ public class HomeChef {
     
     public static void main(String[] args) {
         ControladorIngrediente.getInstance().abreListaIngredientes();
-
     }
     
 }

@@ -229,9 +229,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="quantidadeTextField">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="PlainDocument documentQuantidade = (PlainDocument) quantidadeTextField.getDocument();&#xa;documentQuantidade.setDocumentFilter(new IntegerFilter());"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="idLabel">
           <Properties>
@@ -244,9 +241,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="precoTextField">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="PlainDocument documentPreco = (PlainDocument) precoTextField.getDocument();&#xa;documentPreco.setDocumentFilter(new DoubleFilter());"/>
-          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

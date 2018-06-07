@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.main.java.br.ufsc.INE5608.homechef.view;
+package br.ufsc.ine5608.homechef.view;
 
-import src.main.java.br.ufsc.INE5608.homechef.controller.ControladorIngrediente;
-import src.main.java.br.ufsc.INE5608.homechef.dto.IngredienteDTO;
-import src.main.java.br.ufsc.INE5608.homechef.filter.DoubleFilter;
-import src.main.java.br.ufsc.INE5608.homechef.filter.IntegerFilter;
+import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
+import br.ufsc.ine5608.homechef.model.Ingrediente;
+import br.ufsc.ine5608.homechef.model.Unidade;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
@@ -96,15 +95,9 @@ public class FmCadastrarIngrediente extends javax.swing.JFrame {
 
         quantidadeLabel.setText("Quantidade:");
 
-        PlainDocument documentQuantidade = (PlainDocument) quantidadeTextField.getDocument();
-        documentQuantidade.setDocumentFilter(new IntegerFilter());
-
         idLabel.setText("Id:");
 
         idTextField.setEditable(false);
-
-        PlainDocument documentPreco = (PlainDocument) precoTextField.getDocument();
-        documentPreco.setDocumentFilter(new DoubleFilter());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -224,36 +217,28 @@ public class FmCadastrarIngrediente extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    public void abreAlteracao(IngredienteDTO ingredienteDTO) {
+    public void abreAlteracao(Ingrediente ingrediente) {
         idLabel.setVisible(true);
         idTextField.setVisible(true);
-        idTextField.setText(ingredienteDTO.getIdIngrediente());
-        ingredienteTextField.setText(ingredienteDTO.getNome());
-        setUnidade(ingredienteDTO.getUnidade());
-        precoTextField.setText(ingredienteDTO.getPreco());
-        quantidadeTextField.setText(ingredienteDTO.getQuantidadePreco());
+        idTextField.setText(ingrediente.getIdIngrediente().toString());
+        ingredienteTextField.setText(ingrediente.getNome());
+        setUnidade(ingrediente.getUnidade().toString());
+        precoTextField.setText(ingrediente.getPreco().toString());
+        quantidadeTextField.setText(ingrediente.getQuantidadePreco().toString());
         setVisible(true);
     }
 
-    private IngredienteDTO montaIngrediente() {
-        return new IngredienteDTO()
-                .setIdIngrediente(idTextField.getText())
+    private Ingrediente montaIngrediente() {
+        return new Ingrediente()
+                .setIdIngrediente(Integer.parseInt(idTextField.getText()))
                 .setNome(ingredienteTextField.getText())
-                .setPreco(precoTextField.getText())
-                .setQuantidadePreco(quantidadeTextField.getText())
+                .setPreco(Double.parseDouble(precoTextField.getText()))
+                .setQuantidadePreco(Integer.parseInt(quantidadeTextField.getText()))
                 .setUnidade(getUnidadeSelecionada())
                 .setUnidadePreco(getUnidadeSelecionada());
     }
 
-    private String getUnidadeSelecionada() {
-        Enumeration<AbstractButton> elements = radioGroup.getElements();
-        String unidadeSelecionada = null;
-        while (elements.hasMoreElements()) {
-            AbstractButton abstractButton = elements.nextElement();
-            if (abstractButton.isSelected()) {
-                return abstractButton.getText();
-            }
-        }
+    private Unidade getUnidadeSelecionada() {
         return null;
     }
 
