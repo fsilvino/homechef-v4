@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package homechef.v41;
+package br.ufsc.ine5608.homechef;
 
 /**
  *
  * @author Flávio
  */
-public class HomeChefV41 {
-
-    /**
-     * @param args the command line arguments
-     */
+public class HomeChef {
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        ControladorIngrediente.getInstance().abreListaIngredientes();
+
     }
     
 }
