@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.main.java.br.ufsc.INE5608.homechef.view;
+package br.ufsc.ine5608.homechef.view;
 
-import src.main.java.br.ufsc.INE5608.homechef.controller.ControladorIngrediente;
-import src.main.java.br.ufsc.INE5608.homechef.dto.IngredienteDTO;
+import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
+import br.ufsc.ine5608.homechef.model.Ingrediente;
 
 import javax.swing.*;
 import java.util.Collection;
@@ -125,7 +125,7 @@ public class FmListarIngredientes extends javax.swing.JFrame {
         IngredienteTableModel model = (IngredienteTableModel) ingredienteTable.getModel();
         int selectedRow = ingredienteTable.getSelectedRow();
         if (selectedRow > -1) {
-            IngredienteDTO selecionado = model.getValueAt(selectedRow);
+            Ingrediente selecionado = model.getValueAt(selectedRow);
             try {
                 ControladorIngrediente.getInstance().exclui(selecionado);
                 JOptionPane.showMessageDialog(null, "Ingrediente removido!");
@@ -137,11 +137,11 @@ public class FmListarIngredientes extends javax.swing.JFrame {
 
     private void alteraBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alteraBtnActionPerformed
         IngredienteTableModel model = (IngredienteTableModel) ingredienteTable.getModel();
-        IngredienteDTO selecionado = model.getValueAt(ingredienteTable.getSelectedRow());
+        Ingrediente selecionado = model.getValueAt(ingredienteTable.getSelectedRow());
         ControladorIngrediente.getInstance().abreAlteracao(selecionado);
     }//GEN-LAST:event_alteraBtnActionPerformed
 
-    public void setaIntegredientesTable(Collection<IngredienteDTO> ingredientes) {
+    public void setaIntegredientesTable(Collection<Ingrediente> ingredientes) {
         removeLinhas();
         IngredienteTableModel model = (IngredienteTableModel) ingredienteTable.getModel();
         ingredientes.forEach(

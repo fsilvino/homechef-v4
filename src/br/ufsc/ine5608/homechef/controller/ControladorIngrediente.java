@@ -5,6 +5,8 @@
  */
 package br.ufsc.ine5608.homechef.controller;
 
+import br.ufsc.ine5608.homechef.model.Ingrediente;
+import br.ufsc.ine5608.homechef.model.Unidade;
 import br.ufsc.ine5608.homechef.view.FmCadastrarIngrediente;
 import br.ufsc.ine5608.homechef.view.FmListarIngredientes;
 
@@ -18,14 +20,10 @@ import java.util.stream.Collectors;
 public class ControladorIngrediente {
 
     private static ControladorIngrediente mInstance;
-    private final IngredienteService ingredienteService;
     private final FmListarIngredientes listarIngredientes;
     private final FmCadastrarIngrediente cadastrarIngrediente;
-    private final UnidadeService unidadeService;
-
+    
     private ControladorIngrediente() {
-        unidadeService = new UnidadeServiceImpl();
-        ingredienteService = new IngredienteServiceImpl();
         listarIngredientes = new FmListarIngredientes();
         cadastrarIngrediente = new FmCadastrarIngrediente();
     }
@@ -41,8 +39,8 @@ public class ControladorIngrediente {
         cadastrarIngrediente.abreInclusao();
     }
 
-    public void abreAlteracao(IngredienteDTO ingredienteDTO) {
-        cadastrarIngrediente.abreAlteracao(ingredienteDTO);
+    public void abreAlteracao(Ingrediente ingrediente) {
+        cadastrarIngrediente.abreAlteracao(ingrediente);
     }
 
     public void abreListaIngredientes() {
@@ -50,71 +48,44 @@ public class ControladorIngrediente {
         listarIngredientes.setVisible(true);
     }
 
-    public void salva(IngredienteDTO ingredienteDTO) throws Exception {
-        valida(ingredienteDTO);
-        Ingrediente ingrediente = montaIngrediente(ingredienteDTO);
-        if (ingrediente.getIdIngrediente() == null) {
-            ingredienteService.insert(ingrediente);
-        } else {
-            ingredienteService.update(ingrediente);
-        }
+    public void salva(Ingrediente ingrediente) throws Exception {
+        valida(ingrediente);
+//        if (ingrediente.getIdIngrediente() == null) {
+//            ingredienteService.insert(ingrediente);
+//        } else {
+//            ingredienteService.update(ingrediente);
+//        }
         listarIngredientes.setaIntegredientesTable(listIngredientes());
     }
 
-    public void exclui(IngredienteDTO ingrediente) {
-        ingredienteService.delete(Integer.parseInt(ingrediente.getIdIngrediente()));
+    public void exclui(Ingrediente ingrediente) {
+//        ingredienteService.delete(Integer.parseInt(ingrediente.getIdIngrediente()));;
         listarIngredientes.setaIntegredientesTable(listIngredientes());
     }
 
-    public Collection<IngredienteDTO> listIngredientes() {
-        return ingredienteService.list().stream().map(this::montaIngredienteDTO).collect(Collectors.toList());
-    }
-
-    private Ingrediente montaIngrediente(IngredienteDTO ingredienteDTO) {
-        return new Ingrediente()
-                .setIdIngrediente(ingredienteDTO.getIdIngrediente().equals("") ? null : Integer.parseInt(ingredienteDTO.getIdIngrediente()))
-                .setNome(ingredienteDTO.getNome())
-                .setPreco(ingredienteDTO.getPreco().equals("") ? 0 : Double.parseDouble(ingredienteDTO.getPreco()))
-                .setQuantidadePreco(ingredienteDTO.getQuantidadePreco().equals("") ? 0 : Integer.parseInt(ingredienteDTO.getQuantidadePreco()))
-                .setUnidade(getUnidadeSelecionada(ingredienteDTO.getUnidade()))
-                .setUnidadePreco(getUnidadeSelecionada(ingredienteDTO.getUnidade()));
-    }
-
-    private IngredienteDTO montaIngredienteDTO(Ingrediente ingrediente) {
-        return new IngredienteDTO()
-                .setIdIngrediente(ingrediente.getIdIngrediente().toString())
-                .setNome(ingrediente.getNome())
-                .setPreco(ingrediente.getPreco().toString())
-                .setQuantidadePreco(ingrediente.getQuantidadePreco().toString())
-                .setUnidade(ingrediente.getUnidade().getNomeSingular())
-                .setUnidadePreco(ingrediente.getUnidadePreco().getNomeSingular());
+    public Collection<Ingrediente> listIngredientes() {
+//        return ingredienteService.list().stream().map(this::montaIngredienteDTO).collect(Collectors.toList());
+        return null;
     }
 
     private Unidade getUnidadeSelecionada(String nomeUnidade) {
-        return unidadeService.findByName(nomeUnidade);
+//        return unidadeService.findByName(nomeUnidade);
+        return null;
     }
 
-    private void valida(IngredienteDTO ingredienteDTO) throws Exception {
+    private void valida(Ingrediente ingrediente) throws Exception {
         ArrayList<String> errors = new ArrayList<>();
-        if (ingredienteDTO.getNome().isEmpty()) {
+        if (ingrediente.getNome().isEmpty()) {
             errors.add("Nome do ingrediente não pode estar vazio.");
         }
-        if (ingredienteService.list().stream().anyMatch((i) -> { return !i.getIdIngrediente().toString().equals(ingredienteDTO.getIdIngrediente()) && i.getNome().equals(ingredienteDTO.getNome()); } )) {
-            errors.add("Ingrediente já cadastrado com esse nome.");
-        }
-        if (ingredienteDTO.getUnidade() == null) {
+//        if (ingredienteService.list().stream().anyMatch((i) -> { return !i.getIdIngrediente().toString().equals(ingredienteDTO.getIdIngrediente()) && i.getNome().equals(ingredienteDTO.getNome()); } )) {
+//            errors.add("Ingrediente já cadastrado com esse nome.");
+//        }
+        if (ingrediente.getUnidade() == null) {
             errors.add("Você deve especificar uma unidade.");
         }
-        if (!ingredienteDTO.getPreco().isEmpty() && Double.parseDouble(ingredienteDTO.getPreco()) != 0) {
-            if (Double.parseDouble(ingredienteDTO.getPreco()) < 0) {
-                errors.add("O preço deve ser um número positivo.");
-            }
-            if (ingredienteDTO.getQuantidadePreco().equals("") || Integer.parseInt(ingredienteDTO.getQuantidadePreco()) <= 0) {
-                errors.add("A quantidade deve ser um número positivo maior que zero.");
-            }
-        }
         if (!errors.isEmpty()) {
-            throw new BusinessException(errors);
+//            throw new BusinessException(errors);
         }
     }
 }
