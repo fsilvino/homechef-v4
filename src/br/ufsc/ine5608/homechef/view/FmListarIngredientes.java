@@ -5,17 +5,19 @@
  */
 package br.ufsc.ine5608.homechef.view;
 
-import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
+import br.ufsc.ine5608.homechef.controller.ControladorIngredienteBkp;
+import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
 import br.ufsc.ine5608.homechef.model.Ingrediente;
 
 import javax.swing.*;
 import java.util.Collection;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author Gabriel
  */
-public class FmListarIngredientes extends javax.swing.JFrame {
+public class FmListarIngredientes extends FmBaseTable<DadosIngrediente> {
 
     /**
      * Creates new form NewJFrame
@@ -52,25 +54,10 @@ public class FmListarIngredientes extends javax.swing.JFrame {
         ingredienteLabel.setText("Ingredientes:");
 
         incluiBtn.setText("Inclui");
-        incluiBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                incluiBtnActionPerformed(evt);
-            }
-        });
 
         alteraBtn.setText("Altera");
-        alteraBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                alteraBtnActionPerformed(evt);
-            }
-        });
 
         excluiBtn.setText("Exclui");
-        excluiBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                excluiBtnActionPerformed(evt);
-            }
-        });
 
         fecharBtn.setText("Fechar");
 
@@ -116,45 +103,31 @@ public class FmListarIngredientes extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void incluiBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incluiBtnActionPerformed
-        ControladorIngrediente.getInstance().abreInclusao();
-    }//GEN-LAST:event_incluiBtnActionPerformed
-
-    private void excluiBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluiBtnActionPerformed
-        IngredienteTableModel model = (IngredienteTableModel) ingredienteTable.getModel();
-        int selectedRow = ingredienteTable.getSelectedRow();
-        if (selectedRow > -1) {
-            Ingrediente selecionado = model.getValueAt(selectedRow);
-            try {
-                ControladorIngrediente.getInstance().exclui(selecionado);
-                JOptionPane.showMessageDialog(null, "Ingrediente removido!");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-        }
-    }//GEN-LAST:event_excluiBtnActionPerformed
-
-    private void alteraBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alteraBtnActionPerformed
-        IngredienteTableModel model = (IngredienteTableModel) ingredienteTable.getModel();
-        Ingrediente selecionado = model.getValueAt(ingredienteTable.getSelectedRow());
-        ControladorIngrediente.getInstance().abreAlteracao(selecionado);
-    }//GEN-LAST:event_alteraBtnActionPerformed
-
-    public void setaIntegredientesTable(Collection<Ingrediente> ingredientes) {
-        removeLinhas();
-        IngredienteTableModel model = (IngredienteTableModel) ingredienteTable.getModel();
-        ingredientes.forEach(
-                model::addIngredienteDTO
-        );
+  
+    @Override
+    protected JTable getTable() {
+        return ingredienteTable;
     }
 
-    private void removeLinhas() {
-        IngredienteTableModel model = (IngredienteTableModel) ingredienteTable.getModel();
-        int linhas = model.getRowCount();
-        for (int i = linhas - 1; i >= 0; i--) {
-            model.removeIngredienteDTO(i);
-        }
+    @Override
+    protected TableModel getTableModel() {
+        IngredienteTableModel tbModel = new IngredienteTableModel();
+        
+        tbModel.addListaDeIngredienteDTOs(this.lista);
+        
+        return tbModel;
+    }
+
+    @Override
+    protected void defineCommands() {
+        this.incluiBtn.setActionCommand(AcoesCadastro.ACAO_INCLUI);
+        this.incluiBtn.addActionListener(actManager);
+        
+        this.alteraBtn.setActionCommand(AcoesCadastro.ACAO_ALTERA);
+        this.alteraBtn.addActionListener(actManager);
+        
+        this.excluiBtn.setActionCommand(AcoesCadastro.ACAO_EXCLUI);
+        this.excluiBtn.addActionListener(actManager);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -166,5 +139,7 @@ public class FmListarIngredientes extends javax.swing.JFrame {
     private javax.swing.JTable ingredienteTable;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    
 
 }
