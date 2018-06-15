@@ -49,6 +49,15 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
             throw new Exception("Informe o nome do ingrediente!");
         }
         
+        Ingrediente ingrediente = findIngredientePeloNome(dadosIngrediente.nome);
+        if (ingrediente != null && !ingrediente.getIdIngrediente().equals(dadosIngrediente.idIngrediente)) {
+            throw new Exception("Já existe um ingrediente cadastrado com este nome!");
+        }
+        
+        if (dadosIngrediente.unidade == null) {
+            throw new Exception("Informe a unidade!");
+        }
+        
         return true;
     }
 
@@ -56,14 +65,10 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
     protected void salvaInclusao(DadosIngrediente dadosIngrediente) {
         try {
             if (valida(dadosIngrediente)) {
-                if (findIngredientePeloNome(dadosIngrediente.nome) == null) {
-                    Ingrediente ingrediente = new Ingrediente();
-                    copiaDadosParaIngrediente(dadosIngrediente, ingrediente);
-                    ingrediente.setIdIngrediente(getDao().getNextId());
-                    getDao().put(ingrediente.getIdIngrediente(), ingrediente);
-                } else {
-                    throw new Exception("Já existe um ingrediente cadastrado com esse nome");
-                }
+                Ingrediente ingrediente = new Ingrediente();
+                copiaDadosParaIngrediente(dadosIngrediente, ingrediente);
+                ingrediente.setIdIngrediente(getDao().getNextId());
+                getDao().put(ingrediente.getIdIngrediente(), ingrediente);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaCad, e.getMessage());
