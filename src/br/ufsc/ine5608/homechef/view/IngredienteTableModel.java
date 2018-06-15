@@ -1,13 +1,13 @@
 package br.ufsc.ine5608.homechef.view;
 
-import br.ufsc.ine5608.homechef.model.Ingrediente;
+import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
 import br.ufsc.ine5608.homechef.model.Unidade;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IngredienteTableModel extends AbstractTableModel {
-    private List<Ingrediente> ingredientes;
+    private List<DadosIngrediente> ingredientes;
     
     private String[] colunas = new String[] {
             "Nome", "Unidade", "Preço"
@@ -38,7 +38,7 @@ public class IngredienteTableModel extends AbstractTableModel {
     }
 
 
-    public void setValueAt(Ingrediente aValue, int rowIndex) {
+    public void setValueAt(DadosIngrediente aValue, int rowIndex) {
         ingredientes.add(aValue);
         fireTableCellUpdated(rowIndex, 0);
         fireTableCellUpdated(rowIndex, 1);
@@ -48,15 +48,15 @@ public class IngredienteTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Ingrediente ingrediente = ingredientes.get(rowIndex);
+        DadosIngrediente ingrediente = ingredientes.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                ingrediente.setNome(aValue.toString());
+                ingrediente.nome = aValue.toString();
             case 1:
-                ingrediente.setUnidade((Unidade)aValue);
+                ingrediente.unidade = (Unidade)aValue;
             case 2:
-                ingrediente.setPreco((Double)aValue);
+                ingrediente.preco = (Double)aValue;
 
             default:
                 System.err.println("Índice da coluna inválido");
@@ -66,19 +66,19 @@ public class IngredienteTableModel extends AbstractTableModel {
 
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Ingrediente ingredienteSelecionado = ingredientes.get(rowIndex);
+        DadosIngrediente ingredienteSelecionado = ingredientes.get(rowIndex);
         String valueObject = null;
         switch(columnIndex){
-            case 0: valueObject = ingredienteSelecionado.getNome(); break;
-            case 1: valueObject = ingredienteSelecionado.getUnidade().getUnidade(); break;
-            case 2 : valueObject = ingredienteSelecionado.getQuantidadePreco().toString(); break;
+            case 0: valueObject = ingredienteSelecionado.nome; break;
+            case 1: valueObject = ingredienteSelecionado.unidade.getUnidade(); break;
+            case 2 : valueObject = ingredienteSelecionado.quantidadePreco.toString(); break;
             default: System.err.println("Índice inválido para propriedade do bean IngredienteDTO.class");
         }
 
         return valueObject;
     }
 
-    public Ingrediente getValueAt(int rowIndex) {
+    public DadosIngrediente getValueAt(int rowIndex) {
         return ingredientes.get(rowIndex);
     }
 
@@ -88,14 +88,13 @@ public class IngredienteTableModel extends AbstractTableModel {
     }
 
 
-    public Ingrediente getIngredienteDTO(int indiceLinha) {
+    public DadosIngrediente getIngredienteDTO(int indiceLinha) {
         return ingredientes.get(indiceLinha);
     }
 
-    public void addIngredienteDTO(Ingrediente u) {
+    public void addIngredienteDTO(DadosIngrediente u) {
         ingredientes.add(u);
-
-
+        
         int ultimoIndice = getRowCount() - 1;
 
         fireTableRowsInserted(ultimoIndice, ultimoIndice);
@@ -109,7 +108,7 @@ public class IngredienteTableModel extends AbstractTableModel {
     }
 
 
-    public void addListaDeIngredienteDTOs(List<Ingrediente> novosIngredienteDTOs) {
+    public void addListaDeIngredienteDTOs(List<DadosIngrediente> novosIngredienteDTOs) {
 
         int tamanhoAntigo = getRowCount();
         ingredientes.addAll(novosIngredienteDTOs);

@@ -1,91 +1,166 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufsc.ine5608.homechef.controller;
 
+import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
 import br.ufsc.ine5608.homechef.model.Ingrediente;
-import br.ufsc.ine5608.homechef.model.Unidade;
+import br.ufsc.ine5608.homechef.persistencia.IngredienteDAO;
 import br.ufsc.ine5608.homechef.view.FmCadastrarIngrediente;
 import br.ufsc.ine5608.homechef.view.FmListarIngredientes;
-
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
- * @author Gabriel
+ * Responsável pelo controle de cadastro dos ingredientes
+ * @author Flávio
  */
-public class ControladorIngrediente {
+public class ControladorIngrediente extends ControladorCadastro<FmListarIngredientes, FmCadastrarIngrediente, IngredienteDAO, Integer, Ingrediente, DadosIngrediente> {
 
-    private static ControladorIngrediente mInstance;
-    private final FmListarIngredientes listarIngredientes;
-    private final FmCadastrarIngrediente cadastrarIngrediente;
-    
+    private static ControladorIngrediente instance;
+
     private ControladorIngrediente() {
-        listarIngredientes = new FmListarIngredientes();
-        cadastrarIngrediente = new FmCadastrarIngrediente();
+        super();
     }
 
     public static ControladorIngrediente getInstance() {
-        if (mInstance == null) {
-            mInstance = new ControladorIngrediente();
+        if (instance == null) {
+            instance = new ControladorIngrediente();
         }
-        return mInstance;
+        return instance;
     }
 
-    public void abreInclusao() {
-        cadastrarIngrediente.abreInclusao();
+    @Override
+    protected FmListarIngredientes instanciaTelaTable() {
+        return new FmListarIngredientes();
     }
 
-    public void abreAlteracao(Ingrediente ingrediente) {
-        cadastrarIngrediente.abreAlteracao(ingrediente);
+    @Override
+    protected FmCadastrarIngrediente instanciaTelaCadastro() {
+        return new FmCadastrarIngrediente();
     }
 
-    public void abreListaIngredientes() {
-        listarIngredientes.setaIntegredientesTable(listIngredientes());
-        listarIngredientes.setVisible(true);
-    }
-
-    public void salva(Ingrediente ingrediente) throws Exception {
-        valida(ingrediente);
-//        if (ingrediente.getIdIngrediente() == null) {
-//            ingredienteService.insert(ingrediente);
-//        } else {
-//            ingredienteService.update(ingrediente);
-//        }
-        listarIngredientes.setaIntegredientesTable(listIngredientes());
-    }
-
-    public void exclui(Ingrediente ingrediente) {
-//        ingredienteService.delete(Integer.parseInt(ingrediente.getIdIngrediente()));;
-        listarIngredientes.setaIntegredientesTable(listIngredientes());
-    }
-
-    public Collection<Ingrediente> listIngredientes() {
-//        return ingredienteService.list().stream().map(this::montaIngredienteDTO).collect(Collectors.toList());
-        return null;
-    }
-
-    private Unidade getUnidadeSelecionada(String nomeUnidade) {
-//        return unidadeService.findByName(nomeUnidade);
-        return null;
-    }
-
-    private void valida(Ingrediente ingrediente) throws Exception {
-        ArrayList<String> errors = new ArrayList<>();
-        if (ingrediente.getNome().isEmpty()) {
-            errors.add("Nome do ingrediente não pode estar vazio.");
+    @Override
+    protected boolean valida(DadosIngrediente dadosIngrediente) throws Exception {
+        if (dadosIngrediente == null) {
+            throw new InvalidParameterException("Dados invalidos! Parametro nulo.");
         }
-//        if (ingredienteService.list().stream().anyMatch((i) -> { return !i.getIdIngrediente().toString().equals(ingredienteDTO.getIdIngrediente()) && i.getNome().equals(ingredienteDTO.getNome()); } )) {
-//            errors.add("Ingrediente já cadastrado com esse nome.");
-//        }
-        if (ingrediente.getUnidade() == null) {
-            errors.add("Você deve especificar uma unidade.");
+        
+        if (dadosIngrediente.nome == null || dadosIngrediente.nome.trim().isEmpty()) {
+            throw new Exception("Informe o nome do ingrediente!");
         }
-        if (!errors.isEmpty()) {
-//            throw new BusinessException(errors);
+        
+        Ingrediente ingrediente = findIngredientePeloNome(dadosIngrediente.nome);
+        if (ingrediente != null && !ingrediente.getIdIngrediente().equals(dadosIngrediente.idIngrediente)) {
+            throw new Exception("Já existe um ingrediente cadastrado com este nome!");
+        }
+        
+        if (dadosIngrediente.unidade == null) {
+            throw new Exception("Informe a unidade!");
+        }
+        
+        return true;
+    }
+
+    @Override
+    protected void salvaInclusao(DadosIngrediente dadosIngrediente) {
+        try {
+            if (valida(dadosIngrediente)) {
+                Ingrediente ingrediente = new Ingrediente();
+                copiaDadosParaIngrediente(dadosIngrediente, ingrediente);
+                ingrediente.setIdIngrediente(getDao().getNextId());
+                getDao().put(ingrediente.getIdIngrediente(), ingrediente);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(telaCad, e.getMessage());
         }
     }
+
+    @Override
+    protected void salvaAlteracao(DadosIngrediente dadosIngrediente) {
+        try {
+            Ingrediente ingrediente = findIngrediente(dadosIngrediente.idIngrediente);
+            if (ingrediente != null) {
+                if (valida(dadosIngrediente)) {
+                    copiaDadosParaIngrediente(dadosIngrediente, ingrediente); 
+                    getDao().put(ingrediente.getIdIngrediente(), ingrediente);
+                }
+            } else {
+                throw new Exception("Ingrediente não cadastrado!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(telaCad, e.getMessage());
+        }
+    }
+
+    @Override
+    protected String getMensagemConfirmacaoExclusao(DadosIngrediente dadosIngrediente) {
+        return super.getMensagemConfirmacaoExclusao(dadosIngrediente) +
+               "\nNome: " + dadosIngrediente.nome;
+    }
+
+    
+    
+    @Override
+    protected void executaExclusao(DadosIngrediente dadosIngrediente) {
+        try {
+            if (dadosIngrediente.idIngrediente == null || dadosIngrediente.idIngrediente == 0) {
+                throw new InvalidParameterException("Falha ao excluir o ingrediente! ID não informado.");
+            }
+
+            Ingrediente ingrediente = findIngrediente(dadosIngrediente.idIngrediente);
+            if (ingrediente == null) {
+                throw new Exception("Ingrediente não encontrado pelo id informado!");
+            }
+
+            /*if (!ControladorReceita.getInstance().existeReceitaComIngrediente(ingrediente.getIdIngrediente())) {
+                throw new Exception("Ingrediente está sendo utilizado em uma ou mais receitas!");
+            }*/
+
+            getDao().remove(ingrediente.getIdIngrediente());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(telaTb, e.getMessage());
+        }
+    }
+
+    @Override
+    protected List<DadosIngrediente> getListaDTO() {
+        ArrayList<DadosIngrediente> lista = new ArrayList<>();
+        for (Ingrediente ingrediente : getDao().getList()) {
+            lista.add(ingrediente.getDTO());
+        }
+        return lista;
+    }
+
+    @Override
+    protected IngredienteDAO getDao() {
+        return IngredienteDAO.getInstance();
+    }
+
+    private Ingrediente findIngrediente(int id) {
+        return getDao().get(id);
+    }
+    
+    /**
+     * Pesquisa o ingrediente pelo nome
+     * @param nome Nome a ser pesquisado
+     * @return Ingrediente encontrado pelo nome ou nulo se nao encontrar
+     */
+    private Ingrediente findIngredientePeloNome(String nome) {
+        return getDao().getByNome(nome);
+    }
+    
+    /**
+     * Copia os dados da tela para uma instancia de ingrediente
+     * @param dadosIngrediente Dados passados pela tela
+     * @param ingrediente Objeto veiculo que ira receber os dados
+     */
+    private void copiaDadosParaIngrediente(DadosIngrediente dadosIngrediente, Ingrediente ingrediente) {
+        ingrediente.setIdIngrediente(dadosIngrediente.idIngrediente);
+        ingrediente.setNome(dadosIngrediente.nome);
+        ingrediente.setPreco(dadosIngrediente.preco);
+        ingrediente.setQuantidadePreco(dadosIngrediente.quantidadePreco);
+        ingrediente.setUnidade(dadosIngrediente.unidade);
+        ingrediente.setUnidadePreco(dadosIngrediente.unidadePreco);
+    }
+    
 }

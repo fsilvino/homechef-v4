@@ -116,25 +116,16 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Inclui"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="incluiBtnActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="alteraBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Altera"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="alteraBtnActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="excluiBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Exclui"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="excluiBtnActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="fecharBtn">
       <Properties>

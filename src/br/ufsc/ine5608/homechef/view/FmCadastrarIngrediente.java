@@ -5,23 +5,27 @@
  */
 package br.ufsc.ine5608.homechef.view;
 
-import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
+import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
 import br.ufsc.ine5608.homechef.model.Ingrediente;
 import br.ufsc.ine5608.homechef.model.Unidade;
-
-import javax.swing.*;
-import javax.swing.text.PlainDocument;
 import java.util.Enumeration;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
 
 /**
  * @author Gabriel
  */
-public class FmCadastrarIngrediente extends javax.swing.JFrame {
+public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
 
     /**
      * Creates new form CadastrarIngrediente1
      */
     public FmCadastrarIngrediente() {
+        initFmComponents();
+    }
+
+    @Override
+    protected void initFmComponents() {
         initComponents();
     }
 
@@ -196,26 +200,12 @@ public class FmCadastrarIngrediente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void salvaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaBtnActionPerformed
-        try {
-            ControladorIngrediente.getInstance().salva(montaIngrediente());
-            JOptionPane.showMessageDialog(null, "Ingrediente salvo!");
-            setVisible(false);
-            limpaTela();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
+        
     }//GEN-LAST:event_salvaBtnActionPerformed
 
     private void cancelaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelaBtnActionPerformed
-        setVisible(false);
-        limpaTela();
+        
     }//GEN-LAST:event_cancelaBtnActionPerformed
-
-    public void abreInclusao() {
-        idLabel.setVisible(false);
-        idTextField.setVisible(false);
-        setVisible(true);
-    }
 
     public void abreAlteracao(Ingrediente ingrediente) {
         idLabel.setVisible(true);
@@ -253,12 +243,33 @@ public class FmCadastrarIngrediente extends javax.swing.JFrame {
         }
     }
 
-    private void limpaTela() {
+    @Override
+    protected void reset() {
         idTextField.setText("");
         quantidadeTextField.setText("");
         ingredienteTextField.setText("");
         precoTextField.setText("");
         radioGroup.clearSelection();
+    }
+
+    @Override
+    protected void setDados(DadosIngrediente item) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DadosIngrediente getDados() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    protected JButton getBtOk() {
+        return this.salvaBtn;
+    }
+
+    @Override
+    protected JButton getBtCancela() {
+        return this.cancelaBtn;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -281,4 +292,5 @@ public class FmCadastrarIngrediente extends javax.swing.JFrame {
     private javax.swing.JLabel unidadeLabel;
     private javax.swing.JRadioButton unidadeRadio;
     // End of variables declaration//GEN-END:variables
+
 }
