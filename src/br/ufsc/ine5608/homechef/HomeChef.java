@@ -5,7 +5,7 @@
  */
 package br.ufsc.ine5608.homechef;
 
-import br.ufsc.ine5608.homechef.controller.ControladorIngredienteBkp;
+import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
 
 /**
  *
@@ -14,7 +14,7 @@ import br.ufsc.ine5608.homechef.controller.ControladorIngredienteBkp;
 public class HomeChef {
     
     public static void main(String[] args) {
-        ControladorIngredienteBkp.getInstance().abreListaIngredientes();
+        ControladorIngrediente.getInstance().inicia();
     }
     
 }

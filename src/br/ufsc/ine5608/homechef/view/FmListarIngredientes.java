@@ -23,6 +23,10 @@ public class FmListarIngredientes extends FmBaseTable<DadosIngrediente> {
      * Creates new form NewJFrame
      */
     public FmListarIngredientes() {
+    }
+
+    @Override
+    protected void initFmComponents() {
         initComponents();
     }
 

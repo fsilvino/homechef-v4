@@ -30,6 +30,8 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
         this.observers = new ArrayList<>();
         this.actManager = new ActionManager();
         
+        initFmComponents();
+        
         getBtOk().setActionCommand(AcoesCadastro.ACAO_OK);
         getBtOk().addActionListener(actManager);
         
@@ -42,6 +44,7 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
     protected abstract void reset();
     protected abstract void setDados(DTO item);
     public abstract DTO getDados();
+    protected abstract void initFmComponents();
     protected abstract JButton getBtOk();
     protected abstract JButton getBtCancela();
 

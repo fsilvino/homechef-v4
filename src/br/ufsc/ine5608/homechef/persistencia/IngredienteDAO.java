@@ -31,7 +31,9 @@ public class IngredienteDAO extends BaseDAO<Integer, Ingrediente> {
     public void load() {
         super.load();
         Integer[] keys = this.cache.keySet().toArray(new Integer[0]);
-        this.nextId = keys[keys.length - 1] + 1;
+        this.nextId = 1;
+        if (keys.length > 0)
+            this.nextId = keys[keys.length - 1] + 1;
     }
     
     public int getNextId() {

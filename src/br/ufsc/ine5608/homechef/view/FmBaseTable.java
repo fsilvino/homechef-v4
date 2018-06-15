@@ -30,11 +30,14 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
         initComponents();
         this.lista = new ArrayList<>();
         this.observers = new ArrayList<>();
+        this.actManager = new ActionManager();
+        initFmComponents();
         defineCommands();
     }
     
     protected abstract JTable getTable();
     protected abstract TableModel getTableModel();
+    protected abstract void initFmComponents();
     protected abstract void defineCommands();
     
     public void addObserver(ITelaBaseTableObserver observer) {

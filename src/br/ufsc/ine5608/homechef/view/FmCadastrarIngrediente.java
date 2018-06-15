@@ -21,6 +21,11 @@ public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
      * Creates new form CadastrarIngrediente1
      */
     public FmCadastrarIngrediente() {
+        initFmComponents();
+    }
+
+    @Override
+    protected void initFmComponents() {
         initComponents();
     }
 

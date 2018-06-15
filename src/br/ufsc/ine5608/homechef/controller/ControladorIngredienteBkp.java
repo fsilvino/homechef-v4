@@ -5,6 +5,7 @@
  */
 package br.ufsc.ine5608.homechef.controller;
 
+/*
 import br.ufsc.ine5608.homechef.model.Ingrediente;
 import br.ufsc.ine5608.homechef.model.Unidade;
 import br.ufsc.ine5608.homechef.view.FmCadastrarIngrediente;
@@ -12,14 +13,14 @@ import br.ufsc.ine5608.homechef.view.FmListarIngredientes;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.stream.Collectors;*/
 
 /**
  * @author Gabriel
  */
 public class ControladorIngredienteBkp {
 
-    private static ControladorIngredienteBkp mInstance;
+   /* private static ControladorIngredienteBkp mInstance;
     private final FmListarIngredientes listarIngredientes;
     private final FmCadastrarIngrediente cadastrarIngrediente;
     
@@ -87,5 +88,5 @@ public class ControladorIngredienteBkp {
         if (!errors.isEmpty()) {
 //            throw new BusinessException(errors);
         }
-    }
+    }*/
 }
