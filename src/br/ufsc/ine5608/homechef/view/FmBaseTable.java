@@ -19,18 +19,18 @@ import javax.swing.table.TableModel;
  */
 public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
 
-    protected ActionManager actManager;
+    protected BaseTableActionManager actManager;
     protected final List<ITelaBaseTableObserver> observers;
-    protected List<DTO> lista;
+    protected List<DTO> list;
     
     /**
      * Creates new form FmBaseTable
      */
     public FmBaseTable() {
         initComponents();
-        this.lista = new ArrayList<>();
+        this.list = new ArrayList<>();
         this.observers = new ArrayList<>();
-        this.actManager = new ActionManager();
+        this.actManager = new BaseTableActionManager();
         initFmComponents();
         defineCommands();
     }
@@ -50,15 +50,15 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
         this.observers.remove(observer);
     }
     
-    public void setLista(List<DTO> lista) {
-        this.lista = lista;
+    public void setLista(List<DTO> list) {
+        this.list = list;
         this.atualizaDados();
     }
     
     protected DTO getItemSelecionado() {
         int row = getTable().getSelectedRow();
         if (row > -1) {
-            return this.lista.get(row);
+            return this.list.get(row);
         }
         return null;
     }
@@ -96,7 +96,7 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
         this.repaint();
     }
     
-    private class ActionManager implements ActionListener {
+    private class BaseTableActionManager implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {

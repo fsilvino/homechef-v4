@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
 /**
  * 
  * @author Flávio
- * @param <K> Tipo da chave
  * @param <V> Tipo da entidade
  */
-public abstract class BaseDAO<K, V> {
+public abstract class BaseDAO<V> {
     
-    protected HashMap<K, V> cache;
+    protected HashMap<Integer, V> cache;
     private final String fileName;
+    private int nextId;
     
     protected BaseDAO() {
         this.cache = new HashMap<>();
@@ -29,17 +29,28 @@ public abstract class BaseDAO<K, V> {
     
     protected abstract String getFileName();
     
-    public V get(K key) {
-        return this.cache.get(key);
+    public V get(Integer id) {
+        return this.cache.get(id);
     }
     
-    public void put(K key, V value) {
-        if (key != null && value != null) {
-            this.cache.put(key, value);
+    public void put(Integer id, V value) {
+        if (id != null && value != null) {
+            this.cache.put(id, value);
             persist();
         } else {
             throw new RuntimeException("A chave e o valor devem ser diferentes de null!");
         }
+    }
+    
+    private void prepareNextId() {
+        Integer[] ids = this.cache.keySet().toArray(new Integer[0]);
+        this.nextId = 1;
+        if (ids.length > 0)
+            this.nextId = ids[ids.length - 1] + 1;
+    }
+    
+    public int getNextId() {
+        return this.nextId++;
     }
     
     public void load() {
@@ -48,17 +59,19 @@ public abstract class BaseDAO<K, V> {
             FileInputStream fi = new FileInputStream(fileName);
             ObjectInputStream oi = new ObjectInputStream(fi);
             
-            this.cache = (HashMap<K, V>) oi.readObject();
+            this.cache = (HashMap<Integer, V>) oi.readObject();
             
             oi.close();
             fi.close();
+            
+            prepareNextId();
         } catch (IOException | ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
-    public void remove(K key) {
-        this.cache.remove(key);
+    public void remove(Integer id) {
+        this.cache.remove(id);
         persist();
     }
     

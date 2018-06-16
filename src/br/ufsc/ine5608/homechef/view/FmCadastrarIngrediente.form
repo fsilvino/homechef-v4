@@ -184,9 +184,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancela"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelaBtnActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="salvaBtn">
           <Properties>
@@ -198,9 +195,6 @@
               <Dimension value="[71, 23]"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salvaBtnActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="litroRadio">
           <Properties>

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * Responsável pelo controle de cadastro dos ingredientes
  * @author Flávio
  */
-public class ControladorIngrediente extends ControladorCadastro<FmListarIngredientes, FmCadastrarIngrediente, IngredienteDAO, Integer, Ingrediente, DadosIngrediente> {
+public class ControladorIngrediente extends ControladorCadastro<FmListarIngredientes, FmCadastrarIngrediente, IngredienteDAO, Ingrediente, DadosIngrediente> {
 
     private static ControladorIngrediente instance;
 
@@ -50,7 +50,7 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
         }
         
         Ingrediente ingrediente = findIngredientePeloNome(dadosIngrediente.nome);
-        if (ingrediente != null && !ingrediente.getIdIngrediente().equals(dadosIngrediente.idIngrediente)) {
+        if (ingrediente.getId() != dadosIngrediente.id) {
             throw new Exception("Já existe um ingrediente cadastrado com este nome!");
         }
         
@@ -67,8 +67,8 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
             if (valida(dadosIngrediente)) {
                 Ingrediente ingrediente = new Ingrediente();
                 copiaDadosParaIngrediente(dadosIngrediente, ingrediente);
-                ingrediente.setIdIngrediente(getDao().getNextId());
-                getDao().put(ingrediente.getIdIngrediente(), ingrediente);
+                ingrediente.setId(getDao().getNextId());
+                getDao().put(ingrediente.getId(), ingrediente);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaCad, e.getMessage());
@@ -78,11 +78,11 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
     @Override
     protected void salvaAlteracao(DadosIngrediente dadosIngrediente) {
         try {
-            Ingrediente ingrediente = findIngrediente(dadosIngrediente.idIngrediente);
+            Ingrediente ingrediente = findIngrediente(dadosIngrediente.id);
             if (ingrediente != null) {
                 if (valida(dadosIngrediente)) {
                     copiaDadosParaIngrediente(dadosIngrediente, ingrediente); 
-                    getDao().put(ingrediente.getIdIngrediente(), ingrediente);
+                    getDao().put(ingrediente.getId(), ingrediente);
                 }
             } else {
                 throw new Exception("Ingrediente não cadastrado!");
@@ -103,11 +103,11 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
     @Override
     protected void executaExclusao(DadosIngrediente dadosIngrediente) {
         try {
-            if (dadosIngrediente.idIngrediente == null || dadosIngrediente.idIngrediente == 0) {
+            if (dadosIngrediente.id == null || dadosIngrediente.id == 0) {
                 throw new InvalidParameterException("Falha ao excluir o ingrediente! ID não informado.");
             }
 
-            Ingrediente ingrediente = findIngrediente(dadosIngrediente.idIngrediente);
+            Ingrediente ingrediente = findIngrediente(dadosIngrediente.id);
             if (ingrediente == null) {
                 throw new Exception("Ingrediente não encontrado pelo id informado!");
             }
@@ -116,7 +116,7 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
                 throw new Exception("Ingrediente está sendo utilizado em uma ou mais receitas!");
             }*/
 
-            getDao().remove(ingrediente.getIdIngrediente());
+            getDao().remove(ingrediente.getId());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaTb, e.getMessage());
         }
@@ -155,7 +155,7 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
      * @param ingrediente Objeto veiculo que ira receber os dados
      */
     private void copiaDadosParaIngrediente(DadosIngrediente dadosIngrediente, Ingrediente ingrediente) {
-        ingrediente.setIdIngrediente(dadosIngrediente.idIngrediente);
+        ingrediente.setId(dadosIngrediente.id);
         ingrediente.setNome(dadosIngrediente.nome);
         ingrediente.setPreco(dadosIngrediente.preco);
         ingrediente.setQuantidadePreco(dadosIngrediente.quantidadePreco);

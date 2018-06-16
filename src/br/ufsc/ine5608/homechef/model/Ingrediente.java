@@ -7,81 +7,63 @@ public class Ingrediente implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
-    protected Integer idIngrediente;
+    protected int id;
     protected String nome;
-    protected Double preco;
+    protected double preco;
     protected Unidade unidade;
     protected Unidade unidadePreco;
-    protected Integer quantidadePreco;
+    protected int quantidadePreco;
 
-    public Integer getIdIngrediente() {
-        return idIngrediente;
+    public int getId() {
+        return id;
     }
 
-    public Ingrediente setIdIngrediente(Integer idIngrediente) {
-        this.idIngrediente = idIngrediente;
-        return this;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public Ingrediente setNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
-        return this;
     }
 
     public Double getPreco() {
         return preco;
     }
 
-    public Ingrediente setPreco(Double preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
-        return this;
     }
 
     public Unidade getUnidade() {
         return unidade;
     }
 
-    public Ingrediente setUnidade(Unidade unidade) {
+    public void setUnidade(Unidade unidade) {
         this.unidade = unidade;
-        return this;
     }
 
     public Unidade getUnidadePreco() {
         return unidadePreco;
     }
 
-    public Ingrediente setUnidadePreco(Unidade unidadePreco) {
+    public void setUnidadePreco(Unidade unidadePreco) {
         this.unidadePreco = unidadePreco;
-        return this;
     }
 
-    public Integer getQuantidadePreco() {
+    public int getQuantidadePreco() {
         return quantidadePreco;
     }
 
-    public Ingrediente setQuantidadePreco(Integer quantidadePreco) {
+    public void setQuantidadePreco(int quantidadePreco) {
         this.quantidadePreco = quantidadePreco;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return "Ingrediente{" +
-                "idIngrediente=" + idIngrediente +
-                ", nome='" + nome + '\'' +
-                ", preco=" + preco +
-                ", unidade=" + unidade +
-                ", unidadePreco=" + unidadePreco +
-                ", quantidadePreco=" + quantidadePreco +
-                '}';
     }
     
     public DadosIngrediente getDTO() {
-        return new DadosIngrediente(idIngrediente, nome, preco, unidade, unidadePreco, quantidadePreco);
+        return new DadosIngrediente(id, nome, preco, unidade, unidadePreco, quantidadePreco);
     }
     
 }

@@ -20,7 +20,7 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
 
     protected List<ITelaBaseCadastroObserver> observers;
     protected String acao;
-    private ActionManager actManager;
+    protected BaseCadastroActionManager actManager;
     
     /**
      * Creates new form FmBaseCadastro
@@ -28,7 +28,7 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
     public FmBaseCadastro() {
         initComponents();
         this.observers = new ArrayList<>();
-        this.actManager = new ActionManager();
+        this.actManager = new BaseCadastroActionManager();
         
         initFmComponents();
         
@@ -82,7 +82,7 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
     
     
     
-    private class ActionManager implements ActionListener {
+    private class BaseCadastroActionManager implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
