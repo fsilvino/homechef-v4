@@ -34,5 +34,10 @@ public class IngredienteDAO extends BaseDAO<Ingrediente> {
         }
         return null;
     }
+
+    @Override
+    protected void initializeData() {
+        
+    }
     
 }
