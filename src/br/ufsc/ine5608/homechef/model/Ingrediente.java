@@ -63,7 +63,7 @@ public class Ingrediente implements Serializable {
     }
     
     public DadosIngrediente getDTO() {
-        return new DadosIngrediente(id, nome, preco, unidade, unidadePreco, quantidadePreco);
+        return new DadosIngrediente(id, nome, preco, unidade.getId(), unidadePreco.getId(), quantidadePreco);
     }
     
 }

@@ -69,4 +69,8 @@ public class Unidade implements Serializable {
         this.conversores.remove(subunidade.getId());
     }
     
+    public HashMap<Integer, ConversorUnidade> getConversores() {
+        return this.conversores;
+    }
+    
 }

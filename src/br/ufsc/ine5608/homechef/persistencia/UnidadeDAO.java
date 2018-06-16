@@ -38,20 +38,35 @@ public class UnidadeDAO extends BaseDAO<Unidade> {
     @Override
     protected void initializeData() {
         if (this.cache.isEmpty()) {
-            Unidade und = new Unidade(getNextId(), "Grama", "Gramas", "g");
-            put(und.getId(), und);
+            Unidade grama = new Unidade(getNextId(), "Grama", "Gramas", "g");
+            put(grama.getId(), grama);
 
-            und = new Unidade(getNextId(), "Quilograma", "Quilogramas", "kg");
-            put(und.getId(), und);
+            Unidade quilograma = new Unidade(getNextId(), "Quilograma", "Quilogramas", "kg");
+            quilograma.addSubunidade(grama, 1000);
+            put(quilograma.getId(), quilograma);
 
-            und = new Unidade(getNextId(), "Litro", "Litros", "l");
-            put(und.getId(), und);
+            Unidade mililitro = new Unidade(getNextId(), "Mililitro", "Mililitros", "ml");
+            put(mililitro.getId(), mililitro);
+            
+            Unidade litro = new Unidade(getNextId(), "Litro", "Litros", "l");
+            litro.addSubunidade(mililitro, 1000);
+            put(litro.getId(), litro);
 
-            und = new Unidade(getNextId(), "Mililitro", "Mililitros", "ml");
-            put(und.getId(), und);
-
-            und = new Unidade(getNextId(), "Unidade", "Unidades", "un");
-            put(und.getId(), und);
+            Unidade unidade = new Unidade(getNextId(), "Unidade", "Unidades", "un");
+            put(unidade.getId(), unidade);
+            
+            Unidade lata = new Unidade(getNextId(), "Lata", "Latas", "lt");
+            lata.addSubunidade(grama, 250);
+            put(lata.getId(), lata);
+            
+            Unidade copo = new Unidade(getNextId(), "Copo", "Copos", "cp");
+            copo.addSubunidade(mililitro, 250);
+            put(copo.getId(), copo);
+            
+            Unidade colher = new Unidade(getNextId(), "Colher", "Colheres", "colher");
+            colher.addSubunidade(grama, 40);
+            put(colher.getId(), colher);
+            
         }
     }
     

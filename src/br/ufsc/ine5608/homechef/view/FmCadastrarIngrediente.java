@@ -7,6 +7,7 @@ package br.ufsc.ine5608.homechef.view;
 
 import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
 import br.ufsc.ine5608.homechef.model.Unidade;
+import java.util.Collection;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
@@ -15,6 +16,8 @@ import javax.swing.JButton;
  * @author Gabriel
  */
 public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
+    
+    private Collection<DadosUnidade> unidades;
 
     /**
      * Creates new form CadastrarIngrediente1
@@ -182,6 +185,10 @@ public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
         }
         return null;
     }
+    
+    public void setListaUnidades(Collection<Unidade> unidades) {
+        
+    }
 
     private void setUnidade(String nomeUnidade) {
         Enumeration<AbstractButton> elements = radioGroupUnidade.getElements();
@@ -205,12 +212,12 @@ public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
     @Override
     protected void setDados(DadosIngrediente ingrediente) {
         idLabel.setVisible(ingrediente.id > 0);
-        idTextField.setVisible(true);
-        idTextField.setText(ingrediente.id.toString());
+        idTextField.setVisible(ingrediente.id > 0);
+        idTextField.setText("" + ingrediente.id);
         ingredienteTextField.setText(ingrediente.nome);
         setUnidade(ingrediente.unidade.toString());
-        precoTextField.setText(ingrediente.preco.toString());
-        quantidadeTextField.setText(ingrediente.quantidadePreco.toString());
+        precoTextField.setText("" + ingrediente.preco);
+        quantidadeTextField.setText("" + ingrediente.quantidadePreco);
     }
 
     @Override
