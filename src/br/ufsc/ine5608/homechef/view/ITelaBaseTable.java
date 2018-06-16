@@ -5,8 +5,6 @@
  */
 package br.ufsc.ine5608.homechef.view;
 
-import java.util.Observable;
-
 /**
  *
  * @author Flávio

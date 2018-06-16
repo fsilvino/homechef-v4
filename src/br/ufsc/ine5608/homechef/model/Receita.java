@@ -1,8 +1,11 @@
 package br.ufsc.ine5608.homechef.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public class Receita {
+public class Receita implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     protected int id;
     protected Dificuldade dificuldade;

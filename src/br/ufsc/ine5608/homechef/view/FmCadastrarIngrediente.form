@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="radioGroup">
+    <Component class="javax.swing.ButtonGroup" name="radioGroupUnidade">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -53,34 +53,14 @@
                   <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="quantidadeLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="quantidadeTextField" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="unidadeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="precoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="35" pref="35" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="gramaRadio" max="32767" attributes="0"/>
-                                      <Component id="precoTextField" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
+                          <Component id="quantidadeLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="quilogramaRadio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="litroRadio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="mililitroRadio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="unidadeRadio" min="-2" max="-2" attributes="0"/>
+                          <Component id="quantidadeTextField" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                          <Component id="cbUnidadePreco" min="-2" pref="154" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="194" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="ingredienteLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="idLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -90,16 +70,30 @@
                               <Component id="ingredienteTextField" min="-2" pref="178" max="-2" attributes="0"/>
                               <Component id="idTextField" min="-2" pref="31" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="236" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="unidadeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="precoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="precoTextField" min="-2" pref="57" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="cbUnidade" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="194" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="62" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="idLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="idTextField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -109,23 +103,16 @@
                       <Component id="ingredienteLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="ingredienteTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="mililitroRadio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="unidadeRadio" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                          <Component id="unidadeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="gramaRadio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="quilogramaRadio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="litroRadio" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="unidadeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbUnidade" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="precoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="precoTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbUnidadePreco" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -152,32 +139,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="unidadeLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Unidade:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="gramaRadio">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="radioGroup"/>
-            </Property>
-            <Property name="mnemonic" type="int" value="107"/>
-            <Property name="text" type="java.lang.String" value="Grama"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="quilogramaRadio">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="radioGroup"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Quilograma"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="mililitroRadio">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="radioGroup"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Mililitro"/>
+            <Property name="text" type="java.lang.String" value="Unidade Base:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="cancelaBtn">
@@ -196,25 +158,9 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="litroRadio">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="radioGroup"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Litro"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="precoLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Pre&#xe7;o:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="unidadeRadio">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="radioGroup"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Unidade"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="quantidadeLabel">
@@ -235,6 +181,27 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="precoTextField">
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbUnidadePreco">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbUnidade">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="FmCadastrarIngrediente_cbUnidade"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

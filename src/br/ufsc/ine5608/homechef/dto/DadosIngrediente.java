@@ -9,23 +9,23 @@ import br.ufsc.ine5608.homechef.model.Unidade;
  */
 public class DadosIngrediente {
 
-    public Integer id;
+    public int id;
     public String nome;
-    public Double preco;
-    public Unidade unidade;
-    public Unidade unidadePreco;
-    public Integer quantidadePreco;
+    public double preco;
+    public int idUnidade;
+    public int idUnidadePreco;
+    public int quantidadePreco;
     
     public DadosIngrediente() {
 
     }
 
-    public DadosIngrediente(int id, String nome, Double preco, Unidade unidade, Unidade unidadePreco, Integer quantidadePreco) {
+    public DadosIngrediente(int id, String nome, double preco, int idUnidade, int idUnidadePreco, int quantidadePreco) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
-        this.unidade = unidade;
-        this.unidadePreco = unidadePreco;
+        this.idUnidade = idUnidade;
+        this.idUnidadePreco = idUnidadePreco;
         this.quantidadePreco = quantidadePreco;
     }
     

@@ -30,5 +30,10 @@ public class ReceitaDAO extends BaseDAO<Receita> {
     protected String getFileName() {
         return "receita.hc";
     }
+
+    @Override
+    protected void initializeData() {
+        
+    }
     
 }

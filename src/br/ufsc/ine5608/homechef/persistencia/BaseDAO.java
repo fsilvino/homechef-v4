@@ -1,5 +1,6 @@
 package br.ufsc.ine5608.homechef.persistencia;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,6 +29,7 @@ public abstract class BaseDAO<V> {
     }
     
     protected abstract String getFileName();
+    protected abstract void initializeData();
     
     public V get(Integer id) {
         return this.cache.get(id);
@@ -54,20 +56,26 @@ public abstract class BaseDAO<V> {
     }
     
     public void load() {
-        
-        try {
-            FileInputStream fi = new FileInputStream(fileName);
-            ObjectInputStream oi = new ObjectInputStream(fi);
-            
-            this.cache = (HashMap<Integer, V>) oi.readObject();
-            
-            oi.close();
-            fi.close();
-            
+        File f = new File(fileName);
+        if(f.exists() && !f.isDirectory()) {
+            try {
+                FileInputStream fi = new FileInputStream(fileName);
+                ObjectInputStream oi = new ObjectInputStream(fi);
+
+                this.cache = (HashMap<Integer, V>) oi.readObject();
+
+                oi.close();
+                fi.close();
+                
+                prepareNextId();
+            } catch (IOException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        } else {
+            this.cache = new HashMap<>();
             prepareNextId();
-        } catch (IOException | ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+        this.initializeData();
     }
     
     public void remove(Integer id) {
@@ -76,7 +84,6 @@ public abstract class BaseDAO<V> {
     }
     
     public void persist() {
-        
         try {
             FileOutputStream fo = new FileOutputStream(this.fileName);
             ObjectOutputStream oo = new ObjectOutputStream(fo);

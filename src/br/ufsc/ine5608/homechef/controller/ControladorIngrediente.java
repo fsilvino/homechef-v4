@@ -50,11 +50,11 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
         }
         
         Ingrediente ingrediente = findIngredientePeloNome(dadosIngrediente.nome);
-        if (ingrediente.getId() != dadosIngrediente.id) {
+        if (ingrediente != null && ingrediente.getId() != dadosIngrediente.id) {
             throw new Exception("Já existe um ingrediente cadastrado com este nome!");
         }
         
-        if (dadosIngrediente.unidade == null) {
+        if (dadosIngrediente.idUnidade <= 0) {
             throw new Exception("Informe a unidade!");
         }
         
@@ -103,7 +103,7 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
     @Override
     protected void executaExclusao(DadosIngrediente dadosIngrediente) {
         try {
-            if (dadosIngrediente.id == null || dadosIngrediente.id == 0) {
+            if (dadosIngrediente.id == 0) {
                 throw new InvalidParameterException("Falha ao excluir o ingrediente! ID não informado.");
             }
 
@@ -159,8 +159,8 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
         ingrediente.setNome(dadosIngrediente.nome);
         ingrediente.setPreco(dadosIngrediente.preco);
         ingrediente.setQuantidadePreco(dadosIngrediente.quantidadePreco);
-        ingrediente.setUnidade(dadosIngrediente.unidade);
-        ingrediente.setUnidadePreco(dadosIngrediente.unidadePreco);
+        ingrediente.setUnidade(ControladorUnidade.getInstance().get(dadosIngrediente.idUnidade));
+        ingrediente.setUnidadePreco(ControladorUnidade.getInstance().get(dadosIngrediente.idUnidadePreco));
     }
     
 }

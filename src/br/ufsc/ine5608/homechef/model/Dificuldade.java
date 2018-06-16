@@ -1,6 +1,10 @@
 package br.ufsc.ine5608.homechef.model;
 
-public class Dificuldade {
+import java.io.Serializable;
+
+public class Dificuldade implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     protected int id;
     protected String nome;
