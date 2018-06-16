@@ -9,7 +9,7 @@ import br.ufsc.ine5608.homechef.model.Unidade;
  */
 public class DadosIngrediente {
 
-    public Integer idIngrediente;
+    public Integer id;
     public String nome;
     public Double preco;
     public Unidade unidade;
@@ -20,8 +20,8 @@ public class DadosIngrediente {
 
     }
 
-    public DadosIngrediente(Integer idIngrediente, String nome, Double preco, Unidade unidade, Unidade unidadePreco, Integer quantidadePreco) {
-        this.idIngrediente = idIngrediente;
+    public DadosIngrediente(int id, String nome, Double preco, Unidade unidade, Unidade unidadePreco, Integer quantidadePreco) {
+        this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.unidade = unidade;

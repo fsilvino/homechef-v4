@@ -2,24 +2,22 @@ package br.ufsc.ine5608.homechef.model;
 
 public class Dificuldade {
 
-    protected Integer idDificuldade;
+    protected int id;
     protected String nome;
 
-    public Integer getIdDificuldade() {
-        return idDificuldade;
+    public int getId() {
+        return id;
     }
 
-    public Dificuldade setIdDificuldade(Integer idDificuldade) {
-        this.idDificuldade = idDificuldade;
-        return this;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public Dificuldade setNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
-        return this;
     }
 }

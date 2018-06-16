@@ -4,75 +4,59 @@ import java.util.Collection;
 
 public class Receita {
 
-    protected Integer idReceita;
+    protected int id;
     protected Dificuldade dificuldade;
     protected String modoPreparo;
     protected String nome;
-    protected Integer tempo;
+    protected int tempo;
     protected Collection<Ingrediente> ingredientes;
 
-    public Integer getIdReceita() {
-        return idReceita;
+    public int getId() {
+        return id;
     }
 
-    public Receita setIdReceita(Integer idReceita) {
-        this.idReceita = idReceita;
-        return this;
+    public void setIdReceita(int id) {
+        this.id = id;
     }
 
     public Dificuldade getDificuldade() {
         return dificuldade;
     }
 
-    public Receita setDificuldade(Dificuldade dificuldade) {
+    public void setDificuldade(Dificuldade dificuldade) {
         this.dificuldade = dificuldade;
-        return this;
     }
 
     public String getModoPreparo() {
         return modoPreparo;
     }
 
-    public Receita setModoPreparo(String modoPreparo) {
+    public void setModoPreparo(String modoPreparo) {
         this.modoPreparo = modoPreparo;
-        return this;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public Receita setNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
-        return this;
     }
 
-    public Integer getTempo() {
+    public int getTempo() {
         return tempo;
     }
 
-    public Receita setTempo(Integer tempo) {
+    public void setTempo(int tempo) {
         this.tempo = tempo;
-        return this;
     }
 
     public Collection<Ingrediente> getIngredientes() {
         return ingredientes;
     }
 
-    public Receita setIngredientes(Collection<Ingrediente> ingredientes) {
+    public void setIngredientes(Collection<Ingrediente> ingredientes) {
         this.ingredientes = ingredientes;
-        return this;
     }
-
-    @Override
-    public String toString() {
-        return "Receita{" +
-                "idReceita=" + idReceita +
-                ", dificuldade=" + dificuldade +
-                ", modoPreparo='" + modoPreparo + '\'' +
-                ", nome='" + nome + '\'' +
-                ", tempo=" + tempo +
-                '}';
-    }
+    
 }

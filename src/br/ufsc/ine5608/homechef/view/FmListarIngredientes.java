@@ -5,12 +5,9 @@
  */
 package br.ufsc.ine5608.homechef.view;
 
-import br.ufsc.ine5608.homechef.controller.ControladorIngredienteBkp;
 import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
-import br.ufsc.ine5608.homechef.model.Ingrediente;
 
 import javax.swing.*;
-import java.util.Collection;
 import javax.swing.table.TableModel;
 
 /**
@@ -117,7 +114,7 @@ public class FmListarIngredientes extends FmBaseTable<DadosIngrediente> {
     protected TableModel getTableModel() {
         IngredienteTableModel tbModel = new IngredienteTableModel();
         
-        tbModel.addListaDeIngredienteDTOs(this.lista);
+        tbModel.addListaDeIngredienteDTOs(this.list);
         
         return tbModel;
     }

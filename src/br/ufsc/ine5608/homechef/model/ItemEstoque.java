@@ -4,54 +4,49 @@ import java.time.LocalDate;
 
 public class ItemEstoque {
 
-    protected Integer idItemEstoque;
+    protected int id;
     protected Unidade unidade;
     protected Ingrediente ingrediente;
     protected LocalDate validade;
-    protected Integer quantidade;
+    protected int quantidade;
 
-    public Integer getIdItemEstoque() {
-        return idItemEstoque;
+    public int getId() {
+        return id;
     }
 
-    public ItemEstoque setIdItemEstoque(Integer idItemEstoque) {
-        this.idItemEstoque = idItemEstoque;
-        return this;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Unidade getUnidade() {
         return unidade;
     }
 
-    public ItemEstoque setUnidade(Unidade unidade) {
+    public void setUnidade(Unidade unidade) {
         this.unidade = unidade;
-        return this;
     }
 
     public Ingrediente getIngrediente() {
         return ingrediente;
     }
 
-    public ItemEstoque setIngrediente(Ingrediente ingrediente) {
+    public void setIngrediente(Ingrediente ingrediente) {
         this.ingrediente = ingrediente;
-        return this;
     }
 
     public LocalDate getValidade() {
         return validade;
     }
 
-    public ItemEstoque setValidade(LocalDate validade) {
+    public void setValidade(LocalDate validade) {
         this.validade = validade;
-        return this;
     }
 
-    public Integer getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
-    public ItemEstoque setQuantidade(Integer quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
-        return this;
     }
 }

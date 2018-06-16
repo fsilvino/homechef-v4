@@ -6,7 +6,6 @@
 package br.ufsc.ine5608.homechef.view;
 
 import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
-import br.ufsc.ine5608.homechef.model.Ingrediente;
 import br.ufsc.ine5608.homechef.model.Unidade;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
@@ -74,20 +73,10 @@ public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
         mililitroRadio.setText("Mililitro");
 
         cancelaBtn.setText("Cancela");
-        cancelaBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelaBtnActionPerformed(evt);
-            }
-        });
 
         salvaBtn.setText("Salva");
         salvaBtn.setMaximumSize(new java.awt.Dimension(71, 23));
         salvaBtn.setMinimumSize(new java.awt.Dimension(71, 23));
-        salvaBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salvaBtnActionPerformed(evt);
-            }
-        });
 
         radioGroup.add(litroRadio);
         litroRadio.setText("Litro");
@@ -199,36 +188,11 @@ public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void salvaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaBtnActionPerformed
-        
-    }//GEN-LAST:event_salvaBtnActionPerformed
-
-    private void cancelaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelaBtnActionPerformed
-        
-    }//GEN-LAST:event_cancelaBtnActionPerformed
-
-    public void abreAlteracao(Ingrediente ingrediente) {
-        idLabel.setVisible(true);
-        idTextField.setVisible(true);
-        idTextField.setText(ingrediente.getIdIngrediente().toString());
-        ingredienteTextField.setText(ingrediente.getNome());
-        setUnidade(ingrediente.getUnidade().toString());
-        precoTextField.setText(ingrediente.getPreco().toString());
-        quantidadeTextField.setText(ingrediente.getQuantidadePreco().toString());
-        setVisible(true);
-    }
-
-    private Ingrediente montaIngrediente() {
-        return new Ingrediente()
-                .setIdIngrediente(Integer.parseInt(idTextField.getText()))
-                .setNome(ingredienteTextField.getText())
-                .setPreco(Double.parseDouble(precoTextField.getText()))
-                .setQuantidadePreco(Integer.parseInt(quantidadeTextField.getText()))
-                .setUnidade(getUnidadeSelecionada())
-                .setUnidadePreco(getUnidadeSelecionada());
-    }
-
     private Unidade getUnidadeSelecionada() {
+        return null;
+    }
+    
+    private Unidade getUnidadePrecoSelecionada() {
         return null;
     }
 
@@ -253,13 +217,24 @@ public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
     }
 
     @Override
-    protected void setDados(DadosIngrediente item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void setDados(DadosIngrediente ingrediente) {
+        idLabel.setVisible(ingrediente.id > 0);
+        idTextField.setVisible(true);
+        idTextField.setText(ingrediente.id.toString());
+        ingredienteTextField.setText(ingrediente.nome);
+        setUnidade(ingrediente.unidade.toString());
+        precoTextField.setText(ingrediente.preco.toString());
+        quantidadeTextField.setText(ingrediente.quantidadePreco.toString());
     }
 
     @Override
     public DadosIngrediente getDados() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new DadosIngrediente(Integer.parseInt(idTextField.getText()),
+                                    ingredienteTextField.getText(), 
+                                    Double.parseDouble(precoTextField.getText()), 
+                                    getUnidadeSelecionada(),
+                                    getUnidadePrecoSelecionada(),
+                                    Integer.parseInt(quantidadeTextField.getText()));
     }
     
     @Override

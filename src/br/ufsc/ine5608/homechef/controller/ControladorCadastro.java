@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @param <E>
  * @param <DTO>
  */
-public abstract class ControladorCadastro<TTb extends FmBaseTable<DTO>, TCad extends FmBaseCadastro<DTO>, DAO extends BaseDAO<K, E>, K, E, DTO> 
+public abstract class ControladorCadastro<TTb extends FmBaseTable<DTO>, TCad extends FmBaseCadastro<DTO>, DAO extends BaseDAO<E>, E, DTO> 
             implements ITelaBaseTableObserver<DTO>, ITelaBaseCadastroObserver {
     
     protected TTb telaTb;
