@@ -37,11 +37,23 @@ public class ControladorUnidade {
         return UnidadeDAO.getInstance().getList();
     }
     
-    public Collection<Unidade> getUnidadesRelacionadas(int idUnidade) {
-        Collection<Unidade> relacionadas = new ArrayList<>();
+    public ArrayList<Unidade> getUnidadesBase() {
+        ArrayList<Unidade> unidadesBase = new ArrayList<>();
         
         for (Unidade unidade : getList()) {
-            if (unidade.getConversores().containsKey(idUnidade)) {
+            if (unidade.getConversores().isEmpty()) {
+                unidadesBase.add(unidade);
+            }
+        }
+        
+        return unidadesBase;
+    }
+    
+    public ArrayList<Unidade> getUnidadesRelacionadas(int idUnidade) {
+        ArrayList<Unidade> relacionadas = new ArrayList<>();
+        
+        for (Unidade unidade : getList()) {
+            if (unidade.getId() == idUnidade || unidade.getConversores().containsKey(idUnidade)) {
                 relacionadas.add(unidade);
             }
         }

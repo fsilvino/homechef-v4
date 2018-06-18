@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufsc.ine5608.homechef.view;
 
 import java.awt.event.ActionEvent;
@@ -14,22 +9,20 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 /**
- *
+ * 
  * @author Flávio
  */
 public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
 
     protected BaseTableActionManager actManager;
-    protected final List<ITelaBaseTableObserver> observers;
+    protected ITelaBaseTableObserver observer;
     protected List<DTO> list;
     
     /**
      * Creates new form FmBaseTable
      */
     public FmBaseTable() {
-        initComponents();
         this.list = new ArrayList<>();
-        this.observers = new ArrayList<>();
         this.actManager = new BaseTableActionManager();
         initFmComponents();
         defineCommands();
@@ -40,14 +33,8 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
     protected abstract void initFmComponents();
     protected abstract void defineCommands();
     
-    public void addObserver(ITelaBaseTableObserver observer) {
-        if (!this.observers.contains(observer)) {
-            this.observers.add(observer);
-        }
-    }
-    
-    public void removeObserver(ITelaBaseTableObserver observer) {
-        this.observers.remove(observer);
+    public void setObserver(ITelaBaseTableObserver observer) {
+        this.observer = observer;
     }
     
     public void setLista(List<DTO> list) {
@@ -64,7 +51,7 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
     }
     
     private void notificaInclui() {
-        for (ITelaBaseTableObserver observer : this.observers) {
+        if (observer != null) {
             observer.inclui();
         }
     }
@@ -72,7 +59,7 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
     private void notificaAltera() {
         DTO item = this.getItemSelecionado();
         if (item != null) {
-            for (ITelaBaseTableObserver observer : this.observers) {
+            if (observer != null) {
                 observer.altera(item);
             }
         } else {
@@ -83,7 +70,7 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
     private void notificaExclui() {
         DTO item = this.getItemSelecionado();
         if (item != null) {
-            for (ITelaBaseTableObserver observer : this.observers) {
+            if (observer != null) {
                 observer.exclui(item);
             }
         } else {

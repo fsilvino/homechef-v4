@@ -18,6 +18,7 @@ public class Unidade implements Serializable {
     }
     
     public Unidade(int id, String nomeSingular, String nomePlural, String unidade) {
+        this();
         this.id = id;
         this.nomeSingular = nomeSingular;
         this.nomePlural = nomePlural;
@@ -72,5 +73,12 @@ public class Unidade implements Serializable {
     public HashMap<Integer, ConversorUnidade> getConversores() {
         return this.conversores;
     }
+
+    @Override
+    public String toString() {
+        return nomeSingular + " (" + unidade + ")";
+    }
+    
+    
     
 }

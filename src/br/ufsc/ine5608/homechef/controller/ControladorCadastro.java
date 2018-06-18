@@ -25,9 +25,9 @@ public abstract class ControladorCadastro<TTb extends FmBaseTable<DTO>, TCad ext
 
     public ControladorCadastro() {
         this.telaTb = this.instanciaTelaTable();
-        this.telaTb.addObserver(this);
+        this.telaTb.setObserver(this);
         this.telaCad = this.instanciaTelaCadastro();
-        this.telaCad.addObserver(this);
+        this.telaCad.setObserver(this);
     }
     
     protected abstract TTb instanciaTelaTable();
