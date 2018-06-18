@@ -70,8 +70,8 @@ public class IngredienteTableModel extends AbstractTableModel {
         String valueObject = null;
         switch(columnIndex){
             case 0: valueObject = ingredienteSelecionado.nome; break;
-            case 1: valueObject = ingredienteSelecionado.unidade.getUnidade(); break;
-            case 2 : valueObject = ingredienteSelecionado.quantidadePreco.toString(); break;
+            case 1: valueObject = ingredienteSelecionado.unidade.toString(); break;
+            case 2 : valueObject = ingredienteSelecionado.preco + ""; break;
             default: System.err.println("Índice inválido para propriedade do bean IngredienteDTO.class");
         }
 

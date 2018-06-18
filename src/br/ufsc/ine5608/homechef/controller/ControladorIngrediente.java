@@ -54,7 +54,7 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
             throw new Exception("Já existe um ingrediente cadastrado com este nome!");
         }
         
-        if (dadosIngrediente.idUnidade <= 0) {
+        if (dadosIngrediente.unidade == null) {
             throw new Exception("Informe a unidade!");
         }
         
@@ -64,12 +64,11 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
     @Override
     protected void salvaInclusao(DadosIngrediente dadosIngrediente) {
         try {
-            if (valida(dadosIngrediente)) {
-                Ingrediente ingrediente = new Ingrediente();
-                copiaDadosParaIngrediente(dadosIngrediente, ingrediente);
-                ingrediente.setId(getDao().getNextId());
-                getDao().put(ingrediente.getId(), ingrediente);
-            }
+            Ingrediente ingrediente = new Ingrediente();
+            copiaDadosParaIngrediente(dadosIngrediente, ingrediente);
+            ingrediente.setId(getDao().getNextId());
+            getDao().put(ingrediente.getId(), ingrediente);
+            telaCad.fechaTela();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaCad, e.getMessage());
         }
@@ -80,10 +79,9 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
         try {
             Ingrediente ingrediente = findIngrediente(dadosIngrediente.id);
             if (ingrediente != null) {
-                if (valida(dadosIngrediente)) {
-                    copiaDadosParaIngrediente(dadosIngrediente, ingrediente); 
-                    getDao().put(ingrediente.getId(), ingrediente);
-                }
+                copiaDadosParaIngrediente(dadosIngrediente, ingrediente); 
+                getDao().put(ingrediente.getId(), ingrediente);
+                telaCad.fechaTela();
             } else {
                 throw new Exception("Ingrediente não cadastrado!");
             }
@@ -159,8 +157,8 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
         ingrediente.setNome(dadosIngrediente.nome);
         ingrediente.setPreco(dadosIngrediente.preco);
         ingrediente.setQuantidadePreco(dadosIngrediente.quantidadePreco);
-        ingrediente.setUnidade(ControladorUnidade.getInstance().get(dadosIngrediente.idUnidade));
-        ingrediente.setUnidadePreco(ControladorUnidade.getInstance().get(dadosIngrediente.idUnidadePreco));
+        ingrediente.setUnidade(dadosIngrediente.unidade);
+        ingrediente.setUnidadePreco(dadosIngrediente.unidadePreco);
     }
     
 }

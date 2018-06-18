@@ -18,7 +18,7 @@ import javax.swing.JButton;
  */
 public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
 
-    protected List<ITelaBaseCadastroObserver> observers;
+    protected ITelaBaseCadastroObserver observer;
     protected String acao;
     protected BaseCadastroActionManager actManager;
     
@@ -26,8 +26,6 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
      * Creates new form FmBaseCadastro
      */
     public FmBaseCadastro() {
-        initComponents();
-        this.observers = new ArrayList<>();
         this.actManager = new BaseCadastroActionManager();
         
         initFmComponents();
@@ -48,18 +46,12 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
     protected abstract JButton getBtOk();
     protected abstract JButton getBtCancela();
 
-    public void addObserver(ITelaBaseCadastroObserver observer) {
-        if (!this.observers.contains(observer)) {
-            this.observers.add(observer);
-        }
-    }
-    
-    public void removeObserver(ITelaBaseCadastroObserver observer) {
-        this.observers.remove(observer);
+    public void setObserver(ITelaBaseCadastroObserver observer) {
+        this.observer = observer;
     }
     
     private void notificaSalvar() {
-        for (ITelaBaseCadastroObserver observer : this.observers) {
+        if (observer != null) {
             observer.salvaCadastro(this.acao);
         }
     }
@@ -89,7 +81,6 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
             
             if (AcoesCadastro.ACAO_OK.equals(e.getActionCommand())) {
                 notificaSalvar();
-                fechaTela();
             } else if (AcoesCadastro.ACAO_CANCELA.equals(e.getActionCommand())) {
                 fechaTela();
             }
@@ -106,8 +97,6 @@ public abstract class FmBaseCadastro<DTO> extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

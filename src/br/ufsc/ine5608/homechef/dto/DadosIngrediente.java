@@ -12,20 +12,20 @@ public class DadosIngrediente {
     public int id;
     public String nome;
     public double preco;
-    public int idUnidade;
-    public int idUnidadePreco;
+    public Unidade unidade;
+    public Unidade unidadePreco;
     public int quantidadePreco;
     
     public DadosIngrediente() {
 
     }
 
-    public DadosIngrediente(int id, String nome, double preco, int idUnidade, int idUnidadePreco, int quantidadePreco) {
+    public DadosIngrediente(int id, String nome, double preco, Unidade unidade, Unidade unidadePreco, int quantidadePreco) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
-        this.idUnidade = idUnidade;
-        this.idUnidadePreco = idUnidadePreco;
+        this.unidade = unidade;
+        this.unidadePreco = unidadePreco;
         this.quantidadePreco = quantidadePreco;
     }
     

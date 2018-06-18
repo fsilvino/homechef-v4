@@ -5,30 +5,156 @@
  */
 package br.ufsc.ine5608.homechef.view;
 
+import br.ufsc.ine5608.homechef.controller.ControladorUnidade;
 import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
 import br.ufsc.ine5608.homechef.model.Unidade;
-import java.util.Collection;
-import java.util.Enumeration;
-import javax.swing.AbstractButton;
+import java.awt.event.ItemEvent;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 /**
- * @author Gabriel
+ *
+ * @author Flávio
  */
 public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
     
-    private Collection<DadosUnidade> unidades;
+    private ArrayList<Unidade> unidades;
+    private ArrayList<Unidade> unidadesRelacionadas;
 
     /**
-     * Creates new form CadastrarIngrediente1
+     * Creates new form FmIngredienteTable
      */
     public FmCadastrarIngrediente() {
-        initFmComponents();
+        super();
     }
-
+    
     @Override
     protected void initFmComponents() {
         initComponents();
+        setListaUnidades();
+    }
+    
+    private Unidade getUnidadeSelecionada() {
+        Unidade unidade = null;
+        if (cbUnd.getSelectedIndex() > -1) {
+            unidade = unidades.get(cbUnd.getSelectedIndex());
+        }
+        return unidade;
+    }
+    
+    private Unidade getUnidadePrecoSelecionada() {
+        Unidade unidade = null;
+        if (cbUndPreco.getSelectedIndex() > -1) {
+            unidade = unidadesRelacionadas.get(cbUndPreco.getSelectedIndex());
+        }
+        return unidade;
+    }
+    
+    public void setListaUnidades() {
+        this.unidades = new ArrayList<>(ControladorUnidade.getInstance().getUnidadesBase());
+        carregaCbUnidade();
+        carregaCbUnidadePreco(this.unidades.get(0));
+    }
+    
+    private void carregaCbUnidade() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel(unidades.toArray(new Unidade[0]));
+        cbUnd.setModel(model);
+    }
+    
+    private void carregaCbUnidadePreco(Unidade unidadeBase) {
+        if (unidadeBase != null) {
+            unidadesRelacionadas = ControladorUnidade.getInstance().getUnidadesRelacionadas(unidadeBase.getId());
+        } else {
+            unidadesRelacionadas = new ArrayList<>();
+        }
+        DefaultComboBoxModel model = new DefaultComboBoxModel(unidadesRelacionadas.toArray(new Unidade[0]));
+        cbUndPreco.setModel(model);
+    }
+
+    @Override
+    protected void reset() {
+        lbId.setText("");
+        txtQtdPreco.setText("");
+        txtNome.setText("");
+        txtPreco.setText("");
+        cbUnd.setSelectedIndex(-1);
+        cbUndPreco.setSelectedIndex(-1);
+    }
+
+    @Override
+    protected void setDados(DadosIngrediente ingrediente) {
+        lbId.setVisible(ingrediente.id > 0);
+        lbId.setText("ID: " + ingrediente.id);
+        txtNome.setText(ingrediente.nome);
+        setUnidade(ingrediente.unidade);
+        setUnidadePreco(ingrediente.unidadePreco);
+        txtPreco.setText("" + ingrediente.preco);
+        txtQtdPreco.setText("" + ingrediente.quantidadePreco);
+    }
+    
+    private void setUnidade(Unidade unidade) {
+        int idx = -1;
+        if (unidade != null) {
+            for (int i = 0; i < unidades.size(); i++) {
+                if (unidades.get(i).getId() == unidade.getId()) {
+                    idx = i;
+                    break;
+                }
+            }
+        }
+        cbUnd.setSelectedIndex(idx);
+    }
+    
+    private void setUnidadePreco(Unidade unidadePreco) {
+        int idx = -1;
+        if (unidadePreco != null) {
+            for (int i = 0; i < unidadesRelacionadas.size(); i++) {
+                if (unidadesRelacionadas.get(i).getId() == unidadePreco.getId()) {
+                    idx = i;
+                    break;
+                }
+            }
+        }
+        cbUndPreco.setSelectedIndex(idx);
+    }
+
+    @Override
+    public DadosIngrediente getDados() {
+        int id = 0;
+        if (this.acao.equals(AcoesCadastro.ACAO_ALTERA)) {
+            id = Integer.parseInt(lbId.getText().replaceAll("[^0-9]", ""));
+        }
+        double preco = 0;
+        if (!txtPreco.getText().isEmpty()) {
+            try {
+                preco = Double.parseDouble(txtPreco.getText());
+            } catch (Exception e) {
+            }
+        }
+        int qtdPreco = 0;
+        if (!txtQtdPreco.getText().isEmpty()) {
+            try {
+                qtdPreco = Integer.parseInt(txtQtdPreco.getText());
+            } catch (Exception e) {
+            }
+        }
+        return new DadosIngrediente(id,
+                                    txtNome.getText(),
+                                    preco,
+                                    getUnidadeSelecionada(),
+                                    getUnidadePrecoSelecionada(),
+                                    qtdPreco);
+    }
+    
+    @Override
+    protected JButton getBtOk() {
+        return this.btSalva;
+    }
+
+    @Override
+    protected JButton getBtCancela() {
+        return this.btCancela;
     }
 
     /**
@@ -40,222 +166,125 @@ public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        radioGroupUnidade = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        ingredienteLabel = new javax.swing.JLabel();
-        ingredienteTextField = new javax.swing.JTextField();
-        unidadeLabel = new javax.swing.JLabel();
-        cancelaBtn = new javax.swing.JButton();
-        salvaBtn = new javax.swing.JButton();
-        precoLabel = new javax.swing.JLabel();
-        quantidadeLabel = new javax.swing.JLabel();
-        quantidadeTextField = new javax.swing.JTextField();
-        idLabel = new javax.swing.JLabel();
-        idTextField = new javax.swing.JTextField();
-        precoTextField = new javax.swing.JTextField();
-        cbUnidadePreco = new javax.swing.JComboBox<>();
-        cbUnidade = new javax.swing.JComboBox<>();
+        lbId = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cbUnd = new javax.swing.JComboBox<>();
+        txtPreco = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtQtdPreco = new javax.swing.JTextField();
+        cbUndPreco = new javax.swing.JComboBox<>();
+        btCancela = new javax.swing.JButton();
+        btSalva = new javax.swing.JButton();
+        txtNome = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        lbId.setText("ID:");
 
-        ingredienteLabel.setText("Ingrediente:");
+        jLabel1.setText("Nome:");
 
-        unidadeLabel.setText("Unidade Base:");
+        jLabel2.setText("Unidade base:");
 
-        cancelaBtn.setText("Cancela");
+        jLabel3.setText("Preço:");
 
-        salvaBtn.setText("Salva");
-        salvaBtn.setMaximumSize(new java.awt.Dimension(71, 23));
-        salvaBtn.setMinimumSize(new java.awt.Dimension(71, 23));
+        cbUnd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbUnd.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbUndItemStateChanged(evt);
+            }
+        });
 
-        precoLabel.setText("Preço:");
+        jLabel4.setText("por");
 
-        quantidadeLabel.setText("Quantidade:");
+        cbUndPreco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        idLabel.setText("Id:");
+        btCancela.setText("Cancela");
 
-        idTextField.setEditable(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(salvaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cancelaBtn)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(quantidadeLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(quantidadeTextField)
-                        .addGap(8, 8, 8)
-                        .addComponent(cbUnidadePreco, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(194, 194, 194))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ingredienteLabel)
-                            .addComponent(idLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ingredienteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(unidadeLabel)
-                            .addComponent(precoLabel))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(precoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cbUnidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(194, 194, 194))))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idLabel)
-                    .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ingredienteLabel)
-                    .addComponent(ingredienteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(unidadeLabel)
-                    .addComponent(cbUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precoLabel)
-                    .addComponent(precoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbUnidadePreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(quantidadeLabel)
-                    .addComponent(quantidadeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cancelaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(salvaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        btSalva.setText("Salva");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btSalva)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btCancela))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(lbId)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtQtdPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbUndPreco, 0, 195, Short.MAX_VALUE))
+                            .addComponent(txtNome)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbUnd, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cbUnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtQtdPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbUndPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btCancela)
+                    .addComponent(btSalva))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private String getUnidadeSelecionada() {
-        Enumeration<AbstractButton> elements = radioGroupUnidade.getElements();
-        String unidadeSelecionada = null;
-        while (elements.hasMoreElements()) {
-            AbstractButton abstractButton = elements.nextElement();
-            if (abstractButton.isSelected()) {
-                return abstractButton.getText();
-            }
+    private void cbUndItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbUndItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            carregaCbUnidadePreco((Unidade)evt.getItem());
         }
-        return null;
-    }
-    
-    private String getUnidadePrecoSelecionada() {
-        Enumeration<AbstractButton> elements = radioGroupUnidadePreco.getElements();
-        String unidadeSelecionada = null;
-        while (elements.hasMoreElements()) {
-            AbstractButton abstractButton = elements.nextElement();
-            if (abstractButton.isSelected()) {
-                return abstractButton.getText();
-            }
-        }
-        return null;
-    }
-    
-    public void setListaUnidades(Collection<Unidade> unidades) {
-        
-    }
+    }//GEN-LAST:event_cbUndItemStateChanged
 
-    private void setUnidade(String nomeUnidade) {
-        Enumeration<AbstractButton> elements = radioGroupUnidade.getElements();
-        while (elements.hasMoreElements()) {
-            AbstractButton abstractButton = elements.nextElement();
-            if (abstractButton.getText().equals(nomeUnidade)) {
-                abstractButton.setSelected(true);
-            }
-        }
-    }
-
-    @Override
-    protected void reset() {
-        idTextField.setText("");
-        quantidadeTextField.setText("");
-        ingredienteTextField.setText("");
-        precoTextField.setText("");
-        radioGroupUnidade.clearSelection();
-    }
-
-    @Override
-    protected void setDados(DadosIngrediente ingrediente) {
-        idLabel.setVisible(ingrediente.id > 0);
-        idTextField.setVisible(ingrediente.id > 0);
-        idTextField.setText("" + ingrediente.id);
-        ingredienteTextField.setText(ingrediente.nome);
-        setUnidade(ingrediente.unidade.toString());
-        precoTextField.setText("" + ingrediente.preco);
-        quantidadeTextField.setText("" + ingrediente.quantidadePreco);
-    }
-
-    @Override
-    public DadosIngrediente getDados() {
-        return new DadosIngrediente(Integer.parseInt(idTextField.getText()),
-                                    ingredienteTextField.getText(), 
-                                    Double.parseDouble(precoTextField.getText()), 
-                                    getUnidadeSelecionada(),
-                                    getUnidadePrecoSelecionada(),
-                                    Integer.parseInt(quantidadeTextField.getText()));
-    }
-    
-    @Override
-    protected JButton getBtOk() {
-        return this.salvaBtn;
-    }
-
-    @Override
-    protected JButton getBtCancela() {
-        return this.cancelaBtn;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelaBtn;
-    private javax.swing.JComboBox<String> cbUnidade;
-    private javax.swing.JComboBox<String> cbUnidadePreco;
-    private javax.swing.JLabel idLabel;
-    private javax.swing.JTextField idTextField;
-    private javax.swing.JLabel ingredienteLabel;
-    private javax.swing.JTextField ingredienteTextField;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel precoLabel;
-    private javax.swing.JTextField precoTextField;
-    private javax.swing.JLabel quantidadeLabel;
-    private javax.swing.JTextField quantidadeTextField;
-    private javax.swing.ButtonGroup radioGroupUnidade;
-    private javax.swing.JButton salvaBtn;
-    private javax.swing.JLabel unidadeLabel;
+    private javax.swing.JButton btCancela;
+    private javax.swing.JButton btSalva;
+    private javax.swing.JComboBox<String> cbUnd;
+    private javax.swing.JComboBox<String> cbUndPreco;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lbId;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtPreco;
+    private javax.swing.JTextField txtQtdPreco;
     // End of variables declaration//GEN-END:variables
-
 }
