@@ -65,6 +65,7 @@ public class IngredienteTableModel extends AbstractTableModel {
     }
 
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         DadosIngrediente ingredienteSelecionado = ingredientes.get(rowIndex);
         String valueObject = null;

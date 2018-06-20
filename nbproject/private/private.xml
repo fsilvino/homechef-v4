@@ -10,6 +10,8 @@
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/dto/DadosIngrediente.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/view/FmListarReceitas.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/view/FmBaseCadastro.java</file>
+            <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/controller/ControladorCadastro.java</file>
+            <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/view/FmListarIngredientes.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/view/IngredienteTableModel.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/controller/ControladorUnidade.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/view/FmBaseTable.java</file>
@@ -24,6 +26,7 @@
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/view/FmCadastrarIngrediente.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/view/ListaCompras.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/view/SaidaEstoqueIngrediente.java</file>
+            <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/controller/ControladorReceita.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/persistencia/IngredienteDAO.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/persistencia/BaseDAO.java</file>
             <file>file:/C:/GitHub/homechef-v4/src/br/ufsc/ine5608/homechef/persistencia/ReceitaDAO.java</file>

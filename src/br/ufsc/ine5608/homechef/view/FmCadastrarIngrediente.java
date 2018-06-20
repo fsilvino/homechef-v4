@@ -51,7 +51,7 @@ public class FmCadastrarIngrediente extends FmBaseCadastro<DadosIngrediente> {
         return unidade;
     }
     
-    public void setListaUnidades() {
+    private void setListaUnidades() {
         this.unidades = new ArrayList<>(ControladorUnidade.getInstance().getUnidadesBase());
         carregaCbUnidade();
         carregaCbUnidadePreco(this.unidades.get(0));
