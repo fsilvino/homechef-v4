@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredienteTableModel extends AbstractTableModel {
+    
     private List<DadosIngrediente> ingredientes;
     
     private String[] colunas = new String[] {

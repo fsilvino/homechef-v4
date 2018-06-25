@@ -1,14 +1,19 @@
 package br.ufsc.ine5608.homechef.view;
 
+import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
+import br.ufsc.ine5608.homechef.dto.DadosIngredienteReceita;
 import br.ufsc.ine5608.homechef.dto.DadosReceita;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Flávio
  */
 public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
-
+    
     /**
      * Creates new form Receita
      */
@@ -25,48 +30,48 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        lbNome = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        lbTexto = new javax.swing.JLabel();
+        lbDificuldade = new javax.swing.JLabel();
+        cbDificuldade = new javax.swing.JComboBox<>();
+        lbModoPreparo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        txtModoPreparo = new javax.swing.JTextArea();
+        txtTempo = new javax.swing.JTextField();
+        lbMin = new javax.swing.JLabel();
+        lbIngredientes = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
+        tableIngredientes = new javax.swing.JTable();
+        btCancelar = new javax.swing.JButton();
+        btSalvar = new javax.swing.JButton();
+        btExcluirIngrediente = new javax.swing.JButton();
+        btIncluirIngrediente = new javax.swing.JButton();
+        btAlterarIngrediente = new javax.swing.JButton();
+        lbCustoEstimado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro Receita");
 
-        jLabel6.setText("Nome:");
+        lbNome.setText("Nome:");
 
-        jLabel4.setText("Tempo:");
+        lbTexto.setText("Tempo:");
 
-        jLabel3.setText("Dificuldade:");
+        lbDificuldade.setText("Dificuldade:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fácil", "Média", "Difícil" }));
+        cbDificuldade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fácil", "Média", "Difícil" }));
 
-        jLabel1.setText("Modo de Preparo:");
+        lbModoPreparo.setText("Modo de Preparo:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtModoPreparo.setColumns(20);
+        txtModoPreparo.setRows(5);
+        jScrollPane1.setViewportView(txtModoPreparo);
 
-        jLabel2.setText("min");
+        lbMin.setText("min");
 
-        jLabel5.setText("Ingredientes:");
+        lbIngredientes.setText("Ingredientes:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1 colher", "Azeite", "R$ 0,20"},
                 {"1 und", "Macarrão Instantâneo", "R$ 2,00"},
@@ -76,24 +81,24 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                 "Quantidade", "Ingrediente", "Custo Estimado"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(500);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jScrollPane2.setViewportView(tableIngredientes);
+        if (tableIngredientes.getColumnModel().getColumnCount() > 0) {
+            tableIngredientes.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tableIngredientes.getColumnModel().getColumn(1).setPreferredWidth(500);
+            tableIngredientes.getColumnModel().getColumn(2).setPreferredWidth(100);
         }
 
-        jButton1.setText("Cancela");
+        btCancelar.setText("Cancela");
 
-        jButton2.setText("Salva");
+        btSalvar.setText("Salva");
 
-        jButton3.setText("Exclui");
+        btExcluirIngrediente.setText("Exclui");
 
-        jButton4.setText("Inclui");
+        btIncluirIngrediente.setText("Inclui");
 
-        jButton5.setText("Altera");
+        btAlterarIngrediente.setText("Altera");
 
-        jLabel7.setText("Custo Estimado Receita: R$ 5,70");
+        lbCustoEstimado.setText("Custo Estimado Receita: R$ 5,70");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,33 +109,33 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbNome)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbTexto)
+                            .addComponent(txtTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
-                        .addComponent(jLabel2)
+                        .addComponent(lbMin)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbDificuldade)
+                            .addComponent(cbDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(81, 81, 81))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lbModoPreparo)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(lbIngredientes)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(lbCustoEstimado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)
+                        .addComponent(btIncluirIngrediente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(btAlterarIngrediente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(btExcluirIngrediente)
                         .addGap(21, 21, 21))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -139,9 +144,9 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btSalvar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btCancelar)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -151,36 +156,36 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
+                            .addComponent(lbTexto)
+                            .addComponent(lbDificuldade))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
+                            .addComponent(cbDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbMin)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(lbNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addComponent(lbIngredientes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jLabel7))
+                    .addComponent(btExcluirIngrediente)
+                    .addComponent(btIncluirIngrediente)
+                    .addComponent(btAlterarIngrediente)
+                    .addComponent(lbCustoEstimado))
                 .addGap(9, 9, 9)
-                .addComponent(jLabel1)
+                .addComponent(lbModoPreparo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btCancelar)
+                    .addComponent(btSalvar))
                 .addContainerGap())
         );
 
@@ -188,30 +193,35 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton btAlterarIngrediente;
+    private javax.swing.JButton btCancelar;
+    private javax.swing.JButton btExcluirIngrediente;
+    private javax.swing.JButton btIncluirIngrediente;
+    private javax.swing.JButton btSalvar;
+    private javax.swing.JComboBox<String> cbDificuldade;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lbCustoEstimado;
+    private javax.swing.JLabel lbDificuldade;
+    private javax.swing.JLabel lbIngredientes;
+    private javax.swing.JLabel lbMin;
+    private javax.swing.JLabel lbModoPreparo;
+    private javax.swing.JLabel lbNome;
+    private javax.swing.JLabel lbTexto;
+    private javax.swing.JTable tableIngredientes;
+    private javax.swing.JTextArea txtModoPreparo;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtTempo;
     // End of variables declaration//GEN-END:variables
 
     @Override
     protected void reset() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        txtNome.setText("");
+        txtTempo.setText("");
+        cbDificuldade.setSelectedIndex(-1);
+        lbCustoEstimado.setText("Custo Estimado Receita: (não calculado)");
+        tableIngredientes.setModel(new IngredientesReceitaTableModel());
+        txtModoPreparo.setText("");
     }
 
     @Override
@@ -237,5 +247,58 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
     @Override
     protected JButton getBtCancela() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private class IngredientesReceitaTableModel extends DefaultTableModel {
+        
+        private List<DadosIngredienteReceita> ingredientesReceita;
+    
+        private String[] colunas = new String[] {
+                "Quantidade", "Ingrediente", "Custo Estimado"
+        };
+        
+        public IngredientesReceitaTableModel() {
+            this.ingredientesReceita = new ArrayList<>();
+        }
+        
+        @Override
+        public int getRowCount() {
+            return ingredientesReceita.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex){
+            return colunas[columnIndex];
+        }
+
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            return String.class;
+        }
+        
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            DadosIngredienteReceita ingredienteReceita = ingredientesReceita.get(rowIndex);
+            String valueObject = null;
+            switch(columnIndex) {
+                case 0:
+                    valueObject = "" + ingredienteReceita.quantidade;
+                    break;
+                case 1:
+                    valueObject = ingredienteReceita.ingrediente.nome;
+                    break;
+                case 2:
+                    valueObject = "" + ingredienteReceita.quantidade;
+                    break;
+                default:
+                    System.err.println("Índice inválido para propriedade do bean IngredienteDTO.class");
+            }
+            return valueObject;
+        }
     }
 }

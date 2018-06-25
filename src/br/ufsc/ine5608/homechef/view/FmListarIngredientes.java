@@ -129,6 +129,9 @@ public class FmListarIngredientes extends FmBaseTable<DadosIngrediente> {
         
         this.excluiBtn.setActionCommand(AcoesCadastro.ACAO_EXCLUI);
         this.excluiBtn.addActionListener(actManager);
+        
+        this.fecharBtn.setActionCommand(AcoesCadastro.ACAO_CANCELA);
+        this.fecharBtn.addActionListener(actManager);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
