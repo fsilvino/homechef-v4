@@ -95,6 +95,8 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
                 notificaAltera();
             } else if (AcoesCadastro.ACAO_EXCLUI.equals(comando)) {
                 notificaExclui();
+            } else if (AcoesCadastro.ACAO_CANCELA.contains(comando)) {
+                setVisible(false);
             }
         }
         

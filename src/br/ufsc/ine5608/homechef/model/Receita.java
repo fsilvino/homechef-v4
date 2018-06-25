@@ -5,14 +5,14 @@ import java.util.Collection;
 
 public class Receita implements Serializable {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     protected int id;
     protected Dificuldade dificuldade;
     protected String modoPreparo;
     protected String nome;
     protected int tempo;
-    protected Collection<Ingrediente> ingredientes;
+    protected Collection<IngredienteReceita> ingredientes;
 
     public int getId() {
         return id;
@@ -54,11 +54,11 @@ public class Receita implements Serializable {
         this.tempo = tempo;
     }
 
-    public Collection<Ingrediente> getIngredientes() {
+    public Collection<IngredienteReceita> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(Collection<Ingrediente> ingredientes) {
+    public void setIngredientes(Collection<IngredienteReceita> ingredientes) {
         this.ingredientes = ingredientes;
     }
     

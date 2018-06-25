@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredienteTableModel extends AbstractTableModel {
+    
     private List<DadosIngrediente> ingredientes;
     
     private String[] colunas = new String[] {
@@ -65,6 +66,7 @@ public class IngredienteTableModel extends AbstractTableModel {
     }
 
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         DadosIngrediente ingredienteSelecionado = ingredientes.get(rowIndex);
         String valueObject = null;
