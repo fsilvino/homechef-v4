@@ -5,6 +5,7 @@ import br.ufsc.ine5608.homechef.dto.DadosReceita;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -12,12 +13,18 @@ import javax.swing.table.AbstractTableModel;
  * @author Flávio
  */
 public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
+    
+    private FmCadastroIngredienteReceita fmIngredienteReceita;
+    private List<DadosIngredienteReceita> ingredientesReceita;
 
     /**
      * Creates new form Receita
      */
     public FmCadastrarReceita() {
-
+        ingredientesReceita = new ArrayList<>();
+        
+        fmIngredienteReceita = new FmCadastroIngredienteReceita();
+        fmIngredienteReceita.setVisible(false);
     }
 
     /**
@@ -48,6 +55,8 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         btIncluirIngrediente = new javax.swing.JButton();
         btAlterarIngrediente = new javax.swing.JButton();
         lbCustoEstimado = new javax.swing.JLabel();
+        lbId = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
 
         setTitle("Cadastro Receita");
 
@@ -91,12 +100,31 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         btSalva.setText("Salva");
 
         btExcluirIngrediente.setText("Exclui");
+        btExcluirIngrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirIngredienteActionPerformed(evt);
+            }
+        });
 
         btIncluirIngrediente.setText("Inclui");
+        btIncluirIngrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btIncluirIngredienteActionPerformed(evt);
+            }
+        });
 
         btAlterarIngrediente.setText("Altera");
+        btAlterarIngrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarIngredienteActionPerformed(evt);
+            }
+        });
 
         lbCustoEstimado.setText("Custo Estimado Receita: R$ 5,70");
+
+        lbId.setText("ID:");
+
+        txtId.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,17 +137,24 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbNome)
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 31, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbTexto)
                             .addComponent(txtTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
                         .addComponent(lbMin)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbDificuldade)
-                            .addComponent(cbDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(81, 81, 81))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbDificuldade)
+                                .addGap(29, 29, 29)
+                                .addComponent(lbId)
+                                .addGap(30, 30, 30))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbModoPreparo)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -155,11 +190,13 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbTexto)
-                            .addComponent(lbDificuldade))
+                            .addComponent(lbDificuldade)
+                            .addComponent(lbId))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbMin)))
+                            .addComponent(lbMin)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -190,6 +227,18 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btIncluirIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirIngredienteActionPerformed
+        abreInclusaoIngredienteReceita();
+    }//GEN-LAST:event_btIncluirIngredienteActionPerformed
+
+    private void btAlterarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarIngredienteActionPerformed
+        abreAlteracaoIngredienteReceita();
+    }//GEN-LAST:event_btAlterarIngredienteActionPerformed
+
+    private void btExcluirIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirIngredienteActionPerformed
+        excluiIngredienteReceita();
+    }//GEN-LAST:event_btExcluirIngredienteActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterarIngrediente;
     private javax.swing.JButton btCancela;
@@ -201,12 +250,14 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbCustoEstimado;
     private javax.swing.JLabel lbDificuldade;
+    private javax.swing.JLabel lbId;
     private javax.swing.JLabel lbIngredientes;
     private javax.swing.JLabel lbMin;
     private javax.swing.JLabel lbModoPreparo;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbTexto;
     private javax.swing.JTable tableIngredientes;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextArea txtModoPreparo;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtTempo;
@@ -227,11 +278,35 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         txtNome.setText(item.nome);
         txtTempo.setText("" + item.tempo);
         cbDificuldade.setSelectedItem(item.dificuldade);
+        if (AcoesCadastro.ACAO_ALTERA.equals(this.acao)) {
+            txtId.setText("" + item.idReceita);
+            lbId.setVisible(true);
+            txtId.setVisible(true);
+        } else {
+            txtId.setText("");
+            lbId.setVisible(false);
+            txtId.setVisible(false);
+        }
+        this.ingredientesReceita = new ArrayList<>(item.ingredientes);
+        tableIngredientes.setModel(new IngredientesReceitaTableModel(this.ingredientesReceita));
     }
 
     @Override
     public DadosReceita getDados() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DadosReceita dadosReceita = new DadosReceita();
+        dadosReceita.idReceita = 0;
+        if (AcoesCadastro.ACAO_ALTERA.equals(this.acao)) {
+            dadosReceita.idReceita = Integer.parseInt(txtId.getText());
+        }
+        dadosReceita.nome = txtNome.getText();
+        try {
+            dadosReceita.tempo = Integer.parseInt(txtTempo.getText());
+        } catch (NumberFormatException e) {
+            dadosReceita.tempo = 0;
+        }
+        dadosReceita.modoPreparo = txtModoPreparo.getText();
+        dadosReceita.ingredientes = ingredientesReceita;
+        return dadosReceita;
     }
 
     @Override
@@ -249,6 +324,41 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         return btCancela;
     }
 
+    private DadosIngredienteReceita getIngredienteReceitaSelecionado() {
+        int row = tableIngredientes.getSelectedRow();
+        if (row > -1) {
+            return this.ingredientesReceita.get(row);
+        }
+        return null;
+    }
+    
+    private void abreInclusaoIngredienteReceita() {
+        
+    }
+
+    private void abreAlteracaoIngredienteReceita() {
+        DadosIngredienteReceita ingredienteReceita = getIngredienteReceitaSelecionado();
+        if (ingredienteReceita != null) {
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum ingrediente selecionado!");
+        }
+    }
+
+    private void excluiIngredienteReceita() {
+        DadosIngredienteReceita ingredienteReceita = getIngredienteReceitaSelecionado();
+        if (ingredienteReceita != null) {
+            if (JOptionPane.showConfirmDialog(null, "Deseja realmente remover o ingrediente selecionado?", "Confirmação", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                int idx = this.ingredientesReceita.indexOf(ingredienteReceita);
+                this.ingredientesReceita.remove(idx);
+                IngredientesReceitaTableModel model = (IngredientesReceitaTableModel)this.tableIngredientes.getModel();
+                model.removeIngredienteReceita(idx);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum ingrediente selecionado!");
+        }
+    }
+
     private class IngredientesReceitaTableModel extends AbstractTableModel {
 
         private List<DadosIngredienteReceita> ingredientesReceita;
@@ -259,6 +369,10 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
 
         public IngredientesReceitaTableModel() {
             this.ingredientesReceita = new ArrayList<>();
+        }
+        
+        public IngredientesReceitaTableModel(List<DadosIngredienteReceita> ingredientesReceita) {
+            this.ingredientesReceita = ingredientesReceita;
         }
 
         @Override
