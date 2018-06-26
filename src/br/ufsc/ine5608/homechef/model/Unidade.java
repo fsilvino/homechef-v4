@@ -74,6 +74,13 @@ public class Unidade implements Serializable {
         return this.conversores;
     }
 
+    public int getQuantidadeEquivalente(Unidade subunidade) throws Exception {
+        if (!this.conversores.containsKey(subunidade.getId())) {
+            throw new Exception(String.format("A unidade %s não é uma subunidade de %s!", subunidade.getNomeSingular(), nomeSingular));
+        }
+        return this.conversores.get(subunidade.getId()).getQuantidadeEquivalente();
+    }
+    
     @Override
     public String toString() {
         return nomeSingular + " (" + unidade + ")";

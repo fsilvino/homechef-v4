@@ -5,8 +5,13 @@
  */
 package br.ufsc.ine5608.homechef.view;
 
+import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
 import br.ufsc.ine5608.homechef.dto.DadosReceita;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -19,7 +24,7 @@ public class FmListarReceitas extends FmBaseTable<DadosReceita> {
      * Creates new form FmListarReceitas
      */
     public FmListarReceitas() {
-        
+        super();
     }
 
     /**
@@ -31,17 +36,64 @@ public class FmListarReceitas extends FmBaseTable<DadosReceita> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableReceitas = new javax.swing.JTable();
+        btInclui = new javax.swing.JButton();
+        btAltera = new javax.swing.JButton();
+        btExclui = new javax.swing.JButton();
+        lbReceitas = new javax.swing.JLabel();
+        btFechar = new javax.swing.JButton();
+
+        tableReceitas.setModel(new IngredienteTableModel());
+        jScrollPane1.setViewportView(tableReceitas);
+
+        btInclui.setText("Inclui");
+
+        btAltera.setText("Altera");
+
+        btExclui.setText("Exclui");
+
+        lbReceitas.setText("Receitas:");
+
+        btFechar.setText("Fechar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btFechar)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lbReceitas)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btExclui, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btAltera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btInclui, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(41, 41, 41))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbReceitas)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btInclui, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btAltera)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btExclui)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(btFechar)
+                .addContainerGap())
         );
 
         pack();
@@ -49,12 +101,14 @@ public class FmListarReceitas extends FmBaseTable<DadosReceita> {
 
     @Override
     protected JTable getTable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return tableReceitas;
     }
 
     @Override
     protected TableModel getTableModel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ReceitasTableModel model = new ReceitasTableModel();
+        model.addListaReceitas(this.list);
+        return model;
     }
 
     @Override
@@ -64,9 +118,101 @@ public class FmListarReceitas extends FmBaseTable<DadosReceita> {
 
     @Override
     protected void defineCommands() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.btInclui.setActionCommand(AcoesCadastro.ACAO_INCLUI);
+        this.btInclui.addActionListener(actManager);
+
+        this.btAltera.setActionCommand(AcoesCadastro.ACAO_ALTERA);
+        this.btAltera.addActionListener(actManager);
+
+        this.btExclui.setActionCommand(AcoesCadastro.ACAO_EXCLUI);
+        this.btExclui.addActionListener(actManager);
+
+        this.btFechar.setActionCommand(AcoesCadastro.ACAO_CANCELA);
+        this.btFechar.addActionListener(actManager);
+    }
+
+    private class ReceitasTableModel extends AbstractTableModel {
+
+        private List<DadosReceita> receitas;
+
+        private String[] colunas = new String[]{
+            "Nome", "Tempo", "Dificuldade"
+        };
+
+        public ReceitasTableModel() {
+            this.receitas = new ArrayList<>();
+        }
+
+        @Override
+        public int getRowCount() {
+            return receitas.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
+            return colunas[columnIndex];
+        }
+
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            return String.class;
+        }
+
+        public void addReceita(DadosReceita dadosReceita) {
+            receitas.add(dadosReceita);
+            int ultimoIndice = getRowCount() - 1;
+            fireTableRowsInserted(ultimoIndice, ultimoIndice);
+        }
+
+        public void addListaReceitas(List<DadosReceita> novasReceitas) {
+            int tamanhoAntigo = getRowCount();
+            receitas.addAll(novasReceitas);
+            fireTableRowsInserted(tamanhoAntigo, getRowCount() - 1);
+        }
+
+        public void removeReceita(int indiceLinha) {
+            receitas.remove(indiceLinha);
+            fireTableRowsDeleted(indiceLinha, indiceLinha);
+        }
+
+        public void limpar() {
+            receitas.clear();
+            fireTableDataChanged();
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            DadosReceita receita = receitas.get(rowIndex);
+            String valueObject = null;
+            switch (columnIndex) {
+                case 0:
+                    valueObject = receita.nome;
+                    break;
+                case 1:
+                    valueObject = "" + receita.tempo;
+                    break;
+                case 2:
+                    valueObject = receita.dificuldade.getNome();
+                    break;
+                default:
+                    System.err.println("Índice inválido para propriedade de DadosReceita.class");
+            }
+            return valueObject;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAltera;
+    private javax.swing.JButton btExclui;
+    private javax.swing.JButton btFechar;
+    private javax.swing.JButton btInclui;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbReceitas;
+    private javax.swing.JTable tableReceitas;
     // End of variables declaration//GEN-END:variables
 }

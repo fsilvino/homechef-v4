@@ -1,6 +1,9 @@
 package br.ufsc.ine5608.homechef.model;
 
+import br.ufsc.ine5608.homechef.dto.DadosIngredienteReceita;
+import br.ufsc.ine5608.homechef.dto.DadosReceita;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Receita implements Serializable {
@@ -60,6 +63,16 @@ public class Receita implements Serializable {
 
     public void setIngredientes(Collection<IngredienteReceita> ingredientes) {
         this.ingredientes = ingredientes;
+    }
+    
+    public DadosReceita getDTO() {
+        Collection<DadosIngredienteReceita> listaIR = new ArrayList<>();
+        
+        ingredientes.forEach((ingredienteReceita) -> {
+            listaIR.add(ingredienteReceita.getDTO());
+        });
+        
+        return new DadosReceita(id, dificuldade, modoPreparo, nome, tempo, listaIR);
     }
     
 }

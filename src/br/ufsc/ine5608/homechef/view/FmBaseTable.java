@@ -26,6 +26,7 @@ public abstract class FmBaseTable<DTO> extends javax.swing.JFrame {
         this.actManager = new BaseTableActionManager();
         initFmComponents();
         defineCommands();
+        setLocationRelativeTo(null);
     }
     
     protected abstract JTable getTable();

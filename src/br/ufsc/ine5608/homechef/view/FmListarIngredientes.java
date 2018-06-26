@@ -44,8 +44,6 @@ public class FmListarIngredientes extends FmBaseTable<DadosIngrediente> {
         excluiBtn = new javax.swing.JButton();
         fecharBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         ingredienteTable.setModel(new IngredienteTableModel());
         jScrollPane1.setViewportView(ingredienteTable);
         if (ingredienteTable.getColumnModel().getColumnCount() > 0) {
