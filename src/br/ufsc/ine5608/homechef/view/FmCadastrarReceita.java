@@ -1,24 +1,23 @@
 package br.ufsc.ine5608.homechef.view;
 
-import br.ufsc.ine5608.homechef.dto.DadosIngrediente;
 import br.ufsc.ine5608.homechef.dto.DadosIngredienteReceita;
 import br.ufsc.ine5608.homechef.dto.DadosReceita;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Flávio
  */
 public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
-    
+
     /**
      * Creates new form Receita
      */
     public FmCadastrarReceita() {
-        
+
     }
 
     /**
@@ -43,14 +42,13 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         lbIngredientes = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableIngredientes = new javax.swing.JTable();
-        btCancelar = new javax.swing.JButton();
-        btSalvar = new javax.swing.JButton();
+        btCancela = new javax.swing.JButton();
+        btSalva = new javax.swing.JButton();
         btExcluirIngrediente = new javax.swing.JButton();
         btIncluirIngrediente = new javax.swing.JButton();
         btAlterarIngrediente = new javax.swing.JButton();
         lbCustoEstimado = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro Receita");
 
         lbNome.setText("Nome:");
@@ -88,9 +86,9 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
             tableIngredientes.getColumnModel().getColumn(2).setPreferredWidth(100);
         }
 
-        btCancelar.setText("Cancela");
+        btCancela.setText("Cancela");
 
-        btSalvar.setText("Salva");
+        btSalva.setText("Salva");
 
         btExcluirIngrediente.setText("Exclui");
 
@@ -144,9 +142,9 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btSalvar)
+                .addComponent(btSalva)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCancelar)
+                .addComponent(btCancela)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -184,8 +182,8 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCancelar)
-                    .addComponent(btSalvar))
+                    .addComponent(btCancela)
+                    .addComponent(btSalva))
                 .addContainerGap())
         );
 
@@ -194,10 +192,10 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterarIngrediente;
-    private javax.swing.JButton btCancelar;
+    private javax.swing.JButton btCancela;
     private javax.swing.JButton btExcluirIngrediente;
     private javax.swing.JButton btIncluirIngrediente;
-    private javax.swing.JButton btSalvar;
+    private javax.swing.JButton btSalva;
     private javax.swing.JComboBox<String> cbDificuldade;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -226,7 +224,9 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
 
     @Override
     protected void setDados(DadosReceita item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        txtNome.setText(item.nome);
+        txtTempo.setText("" + item.tempo);
+        cbDificuldade.setSelectedItem(item.dificuldade);
     }
 
     @Override
@@ -241,26 +241,26 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
 
     @Override
     protected JButton getBtOk() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return btSalva;
     }
 
     @Override
     protected JButton getBtCancela() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return btCancela;
     }
-    
-    private class IngredientesReceitaTableModel extends DefaultTableModel {
-        
+
+    private class IngredientesReceitaTableModel extends AbstractTableModel {
+
         private List<DadosIngredienteReceita> ingredientesReceita;
-    
-        private String[] colunas = new String[] {
-                "Quantidade", "Ingrediente", "Custo Estimado"
+
+        private String[] colunas = new String[]{
+            "Quantidade", "Ingrediente", "Custo Estimado"
         };
-        
+
         public IngredientesReceitaTableModel() {
             this.ingredientesReceita = new ArrayList<>();
         }
-        
+
         @Override
         public int getRowCount() {
             return ingredientesReceita.size();
@@ -272,7 +272,7 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         }
 
         @Override
-        public String getColumnName(int columnIndex){
+        public String getColumnName(int columnIndex) {
             return colunas[columnIndex];
         }
 
@@ -280,12 +280,28 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         public Class<?> getColumnClass(int columnIndex) {
             return String.class;
         }
-        
+
+        public void addIngredienteReceita(DadosIngredienteReceita dadosIngredienteReceita) {
+            ingredientesReceita.add(dadosIngredienteReceita);
+            int ultimoIndice = getRowCount() - 1;
+            fireTableRowsInserted(ultimoIndice, ultimoIndice);
+        }
+
+        public void removeIngredienteReceita(int indiceLinha) {
+            ingredientesReceita.remove(indiceLinha);
+            fireTableRowsDeleted(indiceLinha, indiceLinha);
+        }
+
+        public void limpar() {
+            ingredientesReceita.clear();
+            fireTableDataChanged();
+        }
+
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             DadosIngredienteReceita ingredienteReceita = ingredientesReceita.get(rowIndex);
             String valueObject = null;
-            switch(columnIndex) {
+            switch (columnIndex) {
                 case 0:
                     valueObject = "" + ingredienteReceita.quantidade;
                     break;
@@ -293,7 +309,11 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                     valueObject = ingredienteReceita.ingrediente.nome;
                     break;
                 case 2:
-                    valueObject = "" + ingredienteReceita.quantidade;
+                    try {
+                        valueObject = "" + ingredienteReceita.getCustoEstimado();
+                    } catch (Exception e) {
+                        valueObject = e.getMessage();
+                    }
                     break;
                 default:
                     System.err.println("Índice inválido para propriedade do bean IngredienteDTO.class");

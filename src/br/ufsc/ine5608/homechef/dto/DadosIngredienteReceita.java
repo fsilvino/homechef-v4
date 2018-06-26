@@ -29,4 +29,12 @@ public class DadosIngredienteReceita {
         this.ingrediente = ingrediente;
     }
     
+    public double getCustoEstimado() throws Exception {
+        double custo = 0.0d;
+        if (unidade != null && ingrediente != null) {
+            custo = ingrediente.getPrecoParaUnidade(unidade) * quantidade;
+        }
+        return custo;
+    } 
+    
 }

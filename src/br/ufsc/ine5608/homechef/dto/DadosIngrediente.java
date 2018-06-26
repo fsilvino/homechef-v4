@@ -29,4 +29,12 @@ public class DadosIngrediente {
         this.quantidadePreco = quantidadePreco;
     }
     
+    public double getPrecoParaUnidade(Unidade unidade) throws Exception {
+        int qtd = 1;
+        if (unidade.getId() != this.unidadePreco.getId()) {
+            qtd = this.unidadePreco.getQuantidadeEquivalente(unidade);
+        }
+        return preco / quantidadePreco * qtd;
+    }
+    
 }

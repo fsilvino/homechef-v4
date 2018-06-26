@@ -1,6 +1,7 @@
 package br.ufsc.ine5608.homechef.dto;
 
 import br.ufsc.ine5608.homechef.model.Dificuldade;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -15,13 +16,13 @@ public class DadosReceita {
     public String modoPreparo;
     public String nome;
     public Integer tempo;
-    public Collection<DadosIngrediente> ingredientes;
+    public Collection<DadosIngredienteReceita> ingredientes;
     
     public DadosReceita() {
-        
+        ingredientes = new ArrayList<>();
     }
 
-    public DadosReceita(Integer idReceita, Dificuldade dificuldade, String modoPreparo, String nome, Integer tempo, Collection<DadosIngrediente> ingredientes) {
+    public DadosReceita(Integer idReceita, Dificuldade dificuldade, String modoPreparo, String nome, Integer tempo, Collection<DadosIngredienteReceita> ingredientes) {
         this.idReceita = idReceita;
         this.dificuldade = dificuldade;
         this.modoPreparo = modoPreparo;

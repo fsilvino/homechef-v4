@@ -5,6 +5,8 @@
  */
 package br.ufsc.ine5608.homechef.model;
 
+import br.ufsc.ine5608.homechef.dto.DadosIngredienteReceita;
+
 /**
  *
  * @author Flávio
@@ -17,6 +19,7 @@ public class IngredienteReceita {
     private Ingrediente ingrediente;
 
     public IngredienteReceita() {
+        
     }
 
     public int getId() {
@@ -49,6 +52,10 @@ public class IngredienteReceita {
 
     public void setIngrediente(Ingrediente ingrediente) {
         this.ingrediente = ingrediente;
+    }
+    
+    public DadosIngredienteReceita getDTO() {
+        return new DadosIngredienteReceita(id, quantidade, unidade, ingrediente.getDTO());
     }
     
 }
