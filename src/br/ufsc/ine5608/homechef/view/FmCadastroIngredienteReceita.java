@@ -10,10 +10,10 @@ package br.ufsc.ine5608.homechef.view;
  *
  * @author Flávio
  */
-public class IncluiIngredienteReceita extends javax.swing.JFrame {
+public class FmCadastroIngredienteReceita extends javax.swing.JFrame {
 
     /** Creates new form IncluiIngredienteReceita */
-    public IncluiIngredienteReceita() {
+    public FmCadastroIngredienteReceita() {
         initComponents();
     }
 
@@ -26,24 +26,23 @@ public class IncluiIngredienteReceita extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        lbIngrediente = new javax.swing.JLabel();
+        btCancela = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tableIngredientes = new javax.swing.JTable();
+        btSalva = new javax.swing.JButton();
+        txtNomeIngrediente = new javax.swing.JTextField();
+        lbQtd = new javax.swing.JLabel();
+        spnQtd = new javax.swing.JSpinner();
+        cbUnidade = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro Ingrediente na Receita");
 
-        jLabel1.setText("Ingrediente:");
+        lbIngrediente.setText("Ingrediente:");
 
-        jButton1.setText("Cancela");
+        btCancela.setText("Cancela");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tableIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Leite", "L"},
                 {"Farinha de Trigo", "kg"},
@@ -61,17 +60,17 @@ public class IncluiIngredienteReceita extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setPreferredWidth(400);
-            jTable2.getColumnModel().getColumn(1).setPreferredWidth(50);
+        jScrollPane2.setViewportView(tableIngredientes);
+        if (tableIngredientes.getColumnModel().getColumnCount() > 0) {
+            tableIngredientes.getColumnModel().getColumn(0).setPreferredWidth(400);
+            tableIngredientes.getColumnModel().getColumn(1).setPreferredWidth(50);
         }
 
-        jButton3.setText("Salva");
+        btSalva.setText("Salva");
 
-        jLabel3.setText("Quantidade:");
+        lbQtd.setText("Quantidade:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ML", "L", "G", "KG", "XÍCARA (240ml)", "XÍCARA (165g)", "COPO (250ml)", "COPO (212g)" }));
+        cbUnidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ML", "L", "G", "KG", "XÍCARA (240ml)", "XÍCARA (165g)", "COPO (250ml)", "COPO (212g)" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,21 +80,21 @@ public class IncluiIngredienteReceita extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lbIngrediente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3))
+                        .addComponent(txtNomeIngrediente))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)
+                        .addComponent(btSalva)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addComponent(btCancela))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(lbQtd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spnQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -104,19 +103,19 @@ public class IncluiIngredienteReceita extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbIngrediente)
+                    .addComponent(txtNomeIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbQtd)
+                    .addComponent(spnQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(btCancela)
+                    .addComponent(btSalva))
                 .addContainerGap())
         );
 
@@ -124,15 +123,15 @@ public class IncluiIngredienteReceita extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btCancela;
+    private javax.swing.JButton btSalva;
+    private javax.swing.JComboBox<String> cbUnidade;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lbIngrediente;
+    private javax.swing.JLabel lbQtd;
+    private javax.swing.JSpinner spnQtd;
+    private javax.swing.JTable tableIngredientes;
+    private javax.swing.JTextField txtNomeIngrediente;
     // End of variables declaration//GEN-END:variables
 
 }

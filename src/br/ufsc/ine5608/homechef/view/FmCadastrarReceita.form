@@ -31,7 +31,7 @@
                           <Component id="lbNome" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNome" min="-2" pref="340" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" pref="31" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lbTexto" min="-2" max="-2" attributes="0"/>
                           <Component id="txtTempo" min="-2" pref="55" max="-2" attributes="0"/>
@@ -39,11 +39,20 @@
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Component id="lbMin" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbDificuldade" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbDificuldade" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lbDificuldade" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="lbId" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="cbDificuldade" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="txtId" min="-2" pref="44" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lbModoPreparo" min="-2" max="-2" attributes="0"/>
@@ -90,11 +99,13 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbTexto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lbDificuldade" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbId" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="cbDificuldade" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lbMin" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtId" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -263,20 +274,39 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Exclui"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btExcluirIngredienteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btIncluirIngrediente">
       <Properties>
         <Property name="text" type="java.lang.String" value="Inclui"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btIncluirIngredienteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btAlterarIngrediente">
       <Properties>
         <Property name="text" type="java.lang.String" value="Altera"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAlterarIngredienteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbCustoEstimado">
       <Properties>
         <Property name="text" type="java.lang.String" value="Custo Estimado Receita: R$ 5,70"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbId">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtId">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>
