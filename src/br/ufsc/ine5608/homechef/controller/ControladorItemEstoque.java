@@ -66,6 +66,7 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
             copiaDadosParaItemEstoque(dadosItemEstoque, itemEstoque);
             itemEstoque.setId(getDao().getNextId());
             getDao().put(itemEstoque.getId(), itemEstoque);
+            ControladorPrincipal.getInstance().atualizaTelaPrincipal();
             telaEntradaEstoque.fechaTela();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaEntradaEstoque, e.getMessage());
@@ -81,6 +82,7 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
                 if (validaQuantidadeSaida(itemEstoque, quantidade, unidade)) {
                     int quantidadeDecrementa = ControladorUnidade.getInstance().getQuantidadeEquivalenteBase(unidade, quantidade);
                     decrementaItemEstoque(itemEstoque, quantidadeDecrementa);
+                    ControladorPrincipal.getInstance().atualizaTelaPrincipal();
                     atualizaListaTela();
                 } else {
                     JOptionPane.showMessageDialog(telaSaidaEstoque, "Quantidade informada é superior à existente no estoque!");

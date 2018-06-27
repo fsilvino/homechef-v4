@@ -80,6 +80,7 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
             receita.setIdReceita(getDao().getNextId());
             getDao().put(receita.getId(), receita);
             telaCad.fechaTela();
+            ControladorPrincipal.getInstance().atualizaTelaPrincipal();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaCad, e.getMessage());
         }
@@ -93,6 +94,7 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
                 copiaDadosParaReceita(item, receita); 
                 getDao().put(receita.getId(), receita);
                 telaCad.fechaTela();
+                ControladorPrincipal.getInstance().atualizaTelaPrincipal();
             } else {
                 throw new Exception("Receita não cadastrada!");
             }
@@ -138,6 +140,8 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
             }
 
             getDao().remove(receita.getId());
+            
+            ControladorPrincipal.getInstance().atualizaTelaPrincipal();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaTb, e.getMessage());
         }
@@ -159,8 +163,8 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
     
     public boolean existeReceitaComIngrediente(int idIngrediente) {
         for (Receita receita : ReceitaDAO.getInstance().getList()) {
-            for (IngredienteReceita ingrediente : receita.getIngredientes()) {
-                if (ingrediente.getId() == idIngrediente) {
+            for (IngredienteReceita ingredienteReceita : receita.getIngredientes()) {
+                if (ingredienteReceita.getIngrediente().getId() == idIngrediente) {
                     return true;
                 }
             }
