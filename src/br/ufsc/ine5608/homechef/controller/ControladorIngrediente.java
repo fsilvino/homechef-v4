@@ -110,7 +110,7 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
                 throw new Exception("Ingrediente não encontrado pelo id informado!");
             }
 
-            if (!ControladorReceita.getInstance().existeReceitaComIngrediente(ingrediente.getId())) {
+            if (ControladorReceita.getInstance().existeReceitaComIngrediente(ingrediente.getId())) {
                 throw new Exception("Ingrediente está sendo utilizado em uma ou mais receitas!");
             }
 
