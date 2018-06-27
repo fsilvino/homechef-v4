@@ -6,13 +6,13 @@
 package br.ufsc.ine5608.homechef.view;
 
 import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
+import br.ufsc.ine5608.homechef.controller.ControladorItemEstoque;
 import br.ufsc.ine5608.homechef.controller.ControladorReceita;
+import br.ufsc.ine5608.homechef.dto.DadosItemEstoque;
 import br.ufsc.ine5608.homechef.dto.DadosReceita;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,10 +23,52 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form Teste
      */
+        List<DadosReceita> receitas;
+        List<DadosItemEstoque> estoque;
     public MainForm() {
         initComponents();
-        tableReceitas.setModel(new FmListarReceitas().getTable().getModel());
-        //tableItemEstoque.setModel(new FmListarIngredientes().getTable().getModel());
+        this.receitas = new ArrayList<>();
+        this.estoque = new ArrayList<>();
+        setLocationRelativeTo(null);
+    }
+    
+    public void setDados(List<DadosReceita> r, List<DadosItemEstoque> e) {
+        this.receitas = r;
+        this.estoque = e;
+        atualizaTabelas();
+    }
+    
+    private void atualizaTabelas() {
+        atualizaTableReceitas();
+        atualizaTableItensEstoque();
+    }
+    
+    private void atualizaTableReceitas() {
+        //CriaTableModel
+        DefaultTableModel dtmodelReceitas = new DefaultTableModel();
+        dtmodelReceitas.setColumnIdentifiers(new String[] {"Nome", "Tempo", "Dificuldade", "Possível", "Custo estimado"});
+        for (DadosReceita novoDados : this.receitas ) {
+            dtmodelReceitas.addRow(new String[] {novoDados.nome,
+                                        novoDados.tempo.toString(),
+                                        novoDados.dificuldade.getNome(),
+                                        "Impossiveeel",
+                                        "Custo"});
+        }
+        //Set table
+        this.tableReceitas.setModel(dtmodelReceitas);
+    }
+    
+    private void atualizaTableItensEstoque() {
+        DefaultTableModel dtmodelEstoque = new DefaultTableModel();
+        dtmodelEstoque.setColumnIdentifiers(new String[] {"Nome", "Quantidade", "Validade"});
+        for (DadosItemEstoque novoDados : this.estoque ) {
+            dtmodelEstoque.addRow(new String[] {novoDados.ingrediente.getNome(),
+                                        String.valueOf(novoDados.quantidade),
+                                        novoDados.validade.toString(),
+                                        });
+        }
+        //Set table
+        this.tableItemEstoque.setModel(dtmodelEstoque);
     }
 
     /**
@@ -84,9 +126,7 @@ public class MainForm extends javax.swing.JFrame {
 
         tableItemEstoque.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Leite", "1 Litro", "10/05/2018"},
-                {"Farinha de Trigo", "1 Kg", "01/01/2019"},
-                {"Macarrão Instantâneo", "2 und", "05/03/2022"}
+
             },
             new String [] {
                 "Nome", "Qtd", "Validade"
@@ -100,9 +140,7 @@ public class MainForm extends javax.swing.JFrame {
 
         tableReceitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Pudim de Leite", "40 min", "Média", "Não", "R$ 10,00"},
-                {"Feijoada", "1h30min", "Fácil", "Sim", "R$ 15,00"},
-                {"Miojo", "5min", "Fácil", "Sim", "R$ 4,00"}
+
             },
             new String [] {
                 "Nome", "Tempo", "Dificuldade", "Possível", "Custo Estimado"
@@ -272,7 +310,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_smenuCadastroReceitaActionPerformed
 
     private void smenuEstoqueEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smenuEstoqueEntradaActionPerformed
-        // TODO add your handling code here:
+        ControladorItemEstoque.getInstance().inicia();
     }//GEN-LAST:event_smenuEstoqueEntradaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -305,114 +343,4 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField tfNomeReceita;
     // End of variables declaration//GEN-END:variables
 
-    private class FmListarReceitas extends FmBaseTable<DadosReceita> {
-
-    /**
-     * Creates new form FmListarReceitas
-     */
-        public FmListarReceitas() {
-            super();
-        }
-        
-        @Override
-    protected JTable getTable() {
-        return tableReceitas;
-    }
-
-    @Override
-    protected TableModel getTableModel() {
-        ReceitasTableModel model = new ReceitasTableModel();
-        model.addListaReceitas(this.list);
-        return model;
-    }
-
-    @Override
-    protected void initFmComponents() {
-        initComponents();
-    }
-
-        @Override
-        protected void defineCommands() {
-            //throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-    private class ReceitasTableModel extends AbstractTableModel {
-
-        private List<DadosReceita> receitas;
-
-        private String[] colunas = new String[]{
-            "Nome", "Tempo", "Dificuldade", "Possível", "Custo estimado"
-        };
-
-        public ReceitasTableModel() {
-            this.receitas = new ArrayList<>();
-        }
-
-        @Override
-        public int getRowCount() {
-            return receitas.size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return colunas.length;
-        }
-
-        @Override
-        public String getColumnName(int columnIndex) {
-            return colunas[columnIndex];
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return String.class;
-        }
-
-        public void addReceita(DadosReceita dadosReceita) {
-            receitas.add(dadosReceita);
-            int ultimoIndice = getRowCount() - 1;
-            fireTableRowsInserted(ultimoIndice, ultimoIndice);
-        }
-
-        public void addListaReceitas(List<DadosReceita> novasReceitas) {
-            int tamanhoAntigo = getRowCount();
-            receitas.addAll(novasReceitas);
-            fireTableRowsInserted(tamanhoAntigo, getRowCount() - 1);
-        }
-
-        public void removeReceita(int indiceLinha) {
-            receitas.remove(indiceLinha);
-            fireTableRowsDeleted(indiceLinha, indiceLinha);
-        }
-
-        public void limpar() {
-            receitas.clear();
-            fireTableDataChanged();
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            DadosReceita receita = receitas.get(rowIndex);
-            String valueObject = null;
-            switch (columnIndex) {
-                case 0:
-                    valueObject = receita.nome;
-                    break;
-                case 1:
-                    valueObject = "" + receita.tempo;
-                    break;
-                case 2:
-                    valueObject = receita.dificuldade.getNome();
-                    break;
-                case 3:
-                    //valueObject = possivel ou não;
-                case 4: 
-                    //custo estimado
-                default:
-                    System.err.println("Índice inválido para propriedade de DadosReceita.class");
-            }
-            return valueObject;
-        }
-    }
-    }
 }

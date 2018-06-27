@@ -1,6 +1,8 @@
 package br.ufsc.ine5608.homechef.controller;
 
+import br.ufsc.ine5608.homechef.dto.DadosIngredienteReceita;
 import br.ufsc.ine5608.homechef.dto.DadosItemEstoque;
+import br.ufsc.ine5608.homechef.dto.DadosReceita;
 import br.ufsc.ine5608.homechef.model.ItemEstoque;
 import br.ufsc.ine5608.homechef.model.Unidade;
 import br.ufsc.ine5608.homechef.persistencia.ItemEstoqueDAO;
@@ -64,6 +66,7 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
             copiaDadosParaItemEstoque(dadosItemEstoque, itemEstoque);
             itemEstoque.setId(getDao().getNextId());
             getDao().put(itemEstoque.getId(), itemEstoque);
+            ControladorPrincipal.getInstance().atualizaTelaPrincipal();
             telaEntradaEstoque.fechaTela();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaEntradaEstoque, e.getMessage());
@@ -79,6 +82,7 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
                 if (validaQuantidadeSaida(itemEstoque, quantidade, unidade)) {
                     int quantidadeDecrementa = ControladorUnidade.getInstance().getQuantidadeEquivalenteBase(unidade, quantidade);
                     decrementaItemEstoque(itemEstoque, quantidadeDecrementa);
+                    ControladorPrincipal.getInstance().atualizaTelaPrincipal();
                     atualizaListaTela();
                 } else {
                     JOptionPane.showMessageDialog(telaSaidaEstoque, "Quantidade informada é superior à existente no estoque!");
@@ -149,7 +153,7 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
         }
     }
 
-    private List<DadosItemEstoque> getListaDTO() {
+    public List<DadosItemEstoque> getListaDTO() {
         ArrayList<DadosItemEstoque> lista = new ArrayList<>();
         for (ItemEstoque itemEstoque : getDao().getList()) {
             lista.add(itemEstoque.getDTO());
@@ -187,6 +191,18 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
         itemEstoque.setIngrediente(dadosItemEstoque.ingrediente);
         itemEstoque.setValidade(dadosItemEstoque.validade);
         itemEstoque.setQuantidade(dadosItemEstoque.quantidade);
+    }
+    
+    public ArrayList<DadosItemEstoque> pesquisaItensEstoqueReceita(DadosReceita receita) {
+        ArrayList<DadosItemEstoque> resultado = new ArrayList<>();
+        for (DadosIngredienteReceita ingrediente : receita.ingredientes) {
+            for (DadosItemEstoque dadosItemEstoque : getListaDTO()) {
+                if (ingrediente.id == dadosItemEstoque.ingrediente.getId()) {
+                    resultado.add(dadosItemEstoque);
+                }
+            }
+        }
+        return resultado;
     }
 
 }

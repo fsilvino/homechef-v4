@@ -61,6 +61,10 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
             throw new Exception("Informe a dificuldade da receita!");
         }
         
+        if (item.ingredientes.isEmpty()) {
+            throw new Exception("A receite precisa ter ao menos um ingrediente!");
+        }
+        
         if (item.modoPreparo == null || item.modoPreparo.trim().isEmpty()) {
             throw new Exception("Informe o modo de preparo da receita!");
         }
@@ -76,6 +80,7 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
             receita.setIdReceita(getDao().getNextId());
             getDao().put(receita.getId(), receita);
             telaCad.fechaTela();
+            ControladorPrincipal.getInstance().atualizaTelaPrincipal();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaCad, e.getMessage());
         }
@@ -89,6 +94,7 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
                 copiaDadosParaReceita(item, receita); 
                 getDao().put(receita.getId(), receita);
                 telaCad.fechaTela();
+                ControladorPrincipal.getInstance().atualizaTelaPrincipal();
             } else {
                 throw new Exception("Receita não cadastrada!");
             }
@@ -134,13 +140,15 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
             }
 
             getDao().remove(receita.getId());
+            
+            ControladorPrincipal.getInstance().atualizaTelaPrincipal();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaTb, e.getMessage());
         }
     }
 
     @Override
-    protected List<DadosReceita> getListaDTO() {
+    public List<DadosReceita> getListaDTO() {
         ArrayList<DadosReceita> lista = new ArrayList<>();
         for (Receita receita : getDao().getList()) {
             lista.add(receita.getDTO());
@@ -155,8 +163,8 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
     
     public boolean existeReceitaComIngrediente(int idIngrediente) {
         for (Receita receita : ReceitaDAO.getInstance().getList()) {
-            for (IngredienteReceita ingrediente : receita.getIngredientes()) {
-                if (ingrediente.getId() == idIngrediente) {
+            for (IngredienteReceita ingredienteReceita : receita.getIngredientes()) {
+                if (ingredienteReceita.getIngrediente().getId() == idIngrediente) {
                     return true;
                 }
             }
