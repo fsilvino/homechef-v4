@@ -34,7 +34,7 @@ public class DadosIngredienteReceita {
         if (unidade != null && ingrediente != null) {
             custo = ingrediente.getPrecoParaUnidade(unidade) * quantidade;
         }
-        return custo;
+        return ((int)(custo * 100)) / 100.0d;
     } 
     
 }

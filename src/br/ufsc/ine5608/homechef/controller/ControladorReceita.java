@@ -61,6 +61,10 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
             throw new Exception("Informe a dificuldade da receita!");
         }
         
+        if (item.ingredientes.isEmpty()) {
+            throw new Exception("A receite precisa ter ao menos um ingrediente!");
+        }
+        
         if (item.modoPreparo == null || item.modoPreparo.trim().isEmpty()) {
             throw new Exception("Informe o modo de preparo da receita!");
         }

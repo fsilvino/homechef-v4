@@ -30,11 +30,14 @@ public class DadosIngrediente {
     }
     
     public double getPrecoParaUnidade(Unidade unidade) throws Exception {
-        int qtd = 1;
-        if (unidade.getId() != this.unidadePreco.getId()) {
-            qtd = this.unidadePreco.getQuantidadeEquivalente(unidade);
+        if (preco > 0 && quantidadePreco > 0) {
+            int qtd = 1;
+            if (unidade.getId() != this.unidadePreco.getId()) {
+                qtd = this.unidadePreco.getQuantidadeEquivalente(unidade);
+            }
+            return preco / qtd;
         }
-        return preco / quantidadePreco * qtd;
+        throw new Exception("Não informado");
     }
     
 }

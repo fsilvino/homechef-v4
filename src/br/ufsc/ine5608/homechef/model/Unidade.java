@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Unidade implements Serializable {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     protected int id;
     protected String nomePlural;
@@ -74,11 +74,14 @@ public class Unidade implements Serializable {
         return this.conversores;
     }
 
-    public int getQuantidadeEquivalente(Unidade subunidade) throws Exception {
-        if (!this.conversores.containsKey(subunidade.getId())) {
-            throw new Exception(String.format("A unidade %s não é uma subunidade de %s!", subunidade.getNomeSingular(), nomeSingular));
+    public int getQuantidadeEquivalente(Unidade pUnidade) throws Exception {
+        if (!this.conversores.containsKey(pUnidade.getId())) {
+            if (!pUnidade.getConversores().containsKey(id)) {
+                throw new Exception(String.format("A unidade %s não está relacionada com a unidade %s!", pUnidade.getNomeSingular(), nomeSingular));
+            }
+            return pUnidade.getConversores().get(id).getQuantidadeEquivalente();
         }
-        return this.conversores.get(subunidade.getId()).getQuantidadeEquivalente();
+        return this.conversores.get(pUnidade.getId()).getQuantidadeEquivalente();
     }
     
     @Override
