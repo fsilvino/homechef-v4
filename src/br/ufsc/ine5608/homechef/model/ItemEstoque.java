@@ -1,5 +1,6 @@
 package br.ufsc.ine5608.homechef.model;
 
+import br.ufsc.ine5608.homechef.controller.ControladorUnidade;
 import br.ufsc.ine5608.homechef.dto.DadosItemEstoque;
 
 import java.io.Serializable;
@@ -56,6 +57,16 @@ public class ItemEstoque implements Serializable {
     }
 
     public DadosItemEstoque getDTO() {
-        return new DadosItemEstoque(id, unidade, ingrediente, validade, quantidade);
+        int quantidadeEquivalente = 1;
+        try {
+            quantidadeEquivalente = unidade.getQuantidadeEquivalente(ControladorUnidade.getInstance().getUnidadeBase(unidade));
+        } catch (Exception e) {
+        }
+        float quantidade = (float) this.quantidade / quantidadeEquivalente;
+        float decimal = quantidade - (int) quantidade;
+        if (decimal > 0) {
+            return new DadosItemEstoque(id, ControladorUnidade.getInstance().getUnidadeBase(unidade), ingrediente, validade, this.quantidade);
+        }
+        return new DadosItemEstoque(id, unidade, ingrediente, validade, (int) quantidade);
     }
 }

@@ -42,10 +42,7 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
     }
 
     public void inicia() {
-//        this.telaEntradaEstoque.setVisible(true);
-//        this.telaEntradaEstoque.setListaIngrediente();
-        this.telaSaidaEstoque.setVisible(true);
-        this.telaSaidaEstoque.setListaItemEstoque(getListaDTO());
+
     }
 
     @Override
@@ -80,8 +77,7 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
             if (this.valida(item)) {
                 ItemEstoque itemEstoque = findItemEstoque(item.id);
                 if (validaQuantidadeSaida(itemEstoque, quantidade, unidade)) {
-                    int quantidadeDecrementa = ControladorUnidade.getInstance().getQuantidadeEquivalenteBase(unidade, quantidade);
-                    decrementaItemEstoque(itemEstoque, quantidadeDecrementa);
+                    decrementaItemEstoque(itemEstoque, ControladorUnidade.getInstance().getQuantidadeEquivalenteBase(unidade, quantidade));
                     ControladorPrincipal.getInstance().atualizaTelaPrincipal();
                     atualizaListaTela();
                 } else {
@@ -145,9 +141,8 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
             throw new Exception("Quantidade deve ser superior à zero!");
         }
         try {
-            int quantidadeEstoque = ControladorUnidade.getInstance().getQuantidadeEquivalenteBase(itemEstoque.getUnidade(), itemEstoque.getQuantidade());
             quantidade = ControladorUnidade.getInstance().getQuantidadeEquivalenteBase(unidade, quantidade);
-            return quantidadeEstoque >= quantidade;
+            return itemEstoque.getQuantidade() >= quantidade;
         } catch (Exception e) {
             return false;
         }
@@ -183,16 +178,16 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
      * Copia os dados da tela para uma instancia de ingrediente
      *
      * @param dadosItemEstoque Dados passados pela tela
-     * @param itemEstoque      Objeto veiculo que ira receber os dados
+     * @param itemEstoque Objeto veiculo que ira receber os dados
      */
-    private void copiaDadosParaItemEstoque(DadosItemEstoque dadosItemEstoque, ItemEstoque itemEstoque) {
+    private void copiaDadosParaItemEstoque(DadosItemEstoque dadosItemEstoque, ItemEstoque itemEstoque) throws Exception {
         itemEstoque.setId(dadosItemEstoque.id);
         itemEstoque.setUnidade(dadosItemEstoque.unidade);
         itemEstoque.setIngrediente(dadosItemEstoque.ingrediente);
         itemEstoque.setValidade(dadosItemEstoque.validade);
-        itemEstoque.setQuantidade(dadosItemEstoque.quantidade);
+        itemEstoque.setQuantidade(ControladorUnidade.getInstance().getQuantidadeEquivalenteBase(dadosItemEstoque.unidade, dadosItemEstoque.quantidade));
     }
-    
+
     public ArrayList<DadosItemEstoque> pesquisaItensEstoqueReceita(DadosReceita receita) {
         ArrayList<DadosItemEstoque> resultado = new ArrayList<>();
         for (DadosIngredienteReceita ingrediente : receita.ingredientes) {
@@ -203,6 +198,16 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
             }
         }
         return resultado;
+    }
+
+    public void abreTelaEntradaEstoque() {
+        this.telaEntradaEstoque.setVisible(true);
+        this.telaEntradaEstoque.setListaIngrediente();
+    }
+
+    public void abreTelaSaidaEstoque() {
+        this.telaSaidaEstoque.setVisible(true);
+        this.telaSaidaEstoque.setListaItemEstoque(getListaDTO());
     }
 
 }

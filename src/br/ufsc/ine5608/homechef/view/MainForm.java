@@ -214,6 +214,11 @@ public class MainForm extends javax.swing.JFrame {
         menuEstoque.add(smenuEstoqueEntrada);
 
         smenuEstoqueSaida.setText("Saída de Estoque");
+        smenuEstoqueSaida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smenuEstoqueSaidaActionPerformed(evt);
+            }
+        });
         menuEstoque.add(smenuEstoqueSaida);
 
         jMenuBar1.add(menuEstoque);
@@ -331,7 +336,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_smenuCadastroReceitaActionPerformed
 
     private void smenuEstoqueEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smenuEstoqueEntradaActionPerformed
-        ControladorItemEstoque.getInstance().inicia();
+        ControladorItemEstoque.getInstance().abreTelaEntradaEstoque();
     }//GEN-LAST:event_smenuEstoqueEntradaActionPerformed
 
     private void cbDificuldadeReceitaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbDificuldadeReceitaItemStateChanged
@@ -347,6 +352,10 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione uma receita!");
         }
     }//GEN-LAST:event_btPrepararReceitaSelecionadaActionPerformed
+
+  private void smenuEstoqueSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smenuEstoqueSaidaActionPerformed
+        ControladorItemEstoque.getInstance().abreTelaSaidaEstoque();
+    }//GEN-LAST:event_smenuEstoqueSaidaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGerarListaCompras;
