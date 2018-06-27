@@ -19,7 +19,7 @@ public class DadosIngredienteReceita {
     public DadosIngrediente ingrediente;
 
     public DadosIngredienteReceita() {
-        
+        id = 0;
     }
 
     public DadosIngredienteReceita(int id, float quantidade, Unidade unidade, DadosIngrediente ingrediente) {

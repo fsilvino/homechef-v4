@@ -147,6 +147,16 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
         return getDao().getByNome(nome);
     }
     
+    
+    public List<DadosIngrediente> pesquisa(String nome) {
+        ArrayList<DadosIngrediente> resultado = new ArrayList<>();
+        List<Ingrediente> ingredientes = getDao().pesquisa(nome);
+        for (Ingrediente ingrediente : ingredientes) {
+            resultado.add(ingrediente.getDTO());
+        }
+        return resultado;
+    }
+    
     /**
      * Copia os dados da tela para uma instancia de ingrediente
      * @param dadosIngrediente Dados passados pela tela
