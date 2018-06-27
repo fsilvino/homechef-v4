@@ -151,7 +151,7 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
         }
     }
 
-    private List<DadosItemEstoque> getListaDTO() {
+    public List<DadosItemEstoque> getListaDTO() {
         ArrayList<DadosItemEstoque> lista = new ArrayList<>();
         for (ItemEstoque itemEstoque : getDao().getList()) {
             lista.add(itemEstoque.getDTO());
