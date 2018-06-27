@@ -1,9 +1,12 @@
 package br.ufsc.ine5608.homechef.view;
 
+import br.ufsc.ine5608.homechef.controller.ControladorDificuldade;
 import br.ufsc.ine5608.homechef.dto.DadosIngredienteReceita;
 import br.ufsc.ine5608.homechef.dto.DadosReceita;
+import br.ufsc.ine5608.homechef.model.Dificuldade;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -16,6 +19,7 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
     
     private FmCadastroIngredienteReceita fmIngredienteReceita;
     private List<DadosIngredienteReceita> ingredientesReceita;
+    private List<Dificuldade> dificuldades;
 
     /**
      * Creates new form Receita
@@ -289,6 +293,7 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         }
         this.ingredientesReceita = new ArrayList<>(item.ingredientes);
         tableIngredientes.setModel(new IngredientesReceitaTableModel(this.ingredientesReceita));
+        cbDificuldade.setSelectedItem(item.dificuldade);
     }
 
     @Override
@@ -306,12 +311,22 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         }
         dadosReceita.modoPreparo = txtModoPreparo.getText();
         dadosReceita.ingredientes = ingredientesReceita;
+        dadosReceita.dificuldade = null;
+        if (cbDificuldade.getSelectedIndex() > -1) {
+            dadosReceita.dificuldade = this.dificuldades.get(cbDificuldade.getSelectedIndex());
+        }
         return dadosReceita;
     }
 
     @Override
     protected void initFmComponents() {
         initComponents();
+        carregaCbDificuldade();
+    }
+    
+    public void carregaCbDificuldade() {
+        this.dificuldades = ControladorDificuldade.getInstance().getAll();
+        cbDificuldade.setModel(new DefaultComboBoxModel(dificuldades.toArray(new Dificuldade[0])));
     }
 
     @Override
@@ -351,6 +366,7 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         if (validaIngredienteDuplicado(ingredienteReceita)) {
             this.ingredientesReceita.add(ingredienteReceita);
             ((IngredientesReceitaTableModel)tableIngredientes.getModel()).addIngredienteReceita(ingredienteReceita);
+            calcularCustoTotalEstimado();
             fmIngredienteReceita.setVisible(false);
         }
     }
@@ -368,6 +384,7 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
     public void alterarIngrediente(DadosIngredienteReceita ingredienteReceita) {
         if (validaIngredienteDuplicado(ingredienteReceita)) {
             ((IngredientesReceitaTableModel)tableIngredientes.getModel()).fireTableDataChanged();
+            calcularCustoTotalEstimado();
             fmIngredienteReceita.setVisible(false);
         }
     }
@@ -377,13 +394,27 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
         if (ingredienteReceita != null) {
             if (JOptionPane.showConfirmDialog(null, "Deseja realmente remover o ingrediente selecionado?", "Confirmação", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 int idx = this.ingredientesReceita.indexOf(ingredienteReceita);
-                this.ingredientesReceita.remove(idx);
                 IngredientesReceitaTableModel model = (IngredientesReceitaTableModel)this.tableIngredientes.getModel();
                 model.removeIngredienteReceita(idx);
+                calcularCustoTotalEstimado();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum ingrediente selecionado!");
         }
+    }
+    
+    private void calcularCustoTotalEstimado() {
+        String strCusto;
+        try {
+            double custo = 0;
+            for (DadosIngredienteReceita dadosIngredienteReceita : ingredientesReceita) {
+                custo += dadosIngredienteReceita.getCustoEstimado();
+            }
+            strCusto = "R$ " + custo;
+        } catch (Exception e) {
+            strCusto = "(não calculado)";
+        }
+        lbCustoEstimado.setText("Custo Estimado Receita: " + strCusto);
     }
 
     private class IngredientesReceitaTableModel extends AbstractTableModel {
@@ -451,7 +482,7 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
                     break;
                 case 2:
                     try {
-                        valueObject = "" + ingredienteReceita.getCustoEstimado();
+                        valueObject = "R$ " + ingredienteReceita.getCustoEstimado();
                     } catch (Exception e) {
                         valueObject = e.getMessage();
                     }

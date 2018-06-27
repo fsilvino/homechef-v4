@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class ItemEstoque implements Serializable {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     protected int id;
     protected Unidade unidade;

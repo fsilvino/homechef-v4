@@ -6,12 +6,15 @@
 package br.ufsc.ine5608.homechef.model;
 
 import br.ufsc.ine5608.homechef.dto.DadosIngredienteReceita;
+import java.io.Serializable;
 
 /**
  *
  * @author Flávio
  */
-public class IngredienteReceita {
+public class IngredienteReceita implements Serializable {
+    
+    private static final long serialVersionUID = 2L;
     
     private int id;
     private float quantidade;

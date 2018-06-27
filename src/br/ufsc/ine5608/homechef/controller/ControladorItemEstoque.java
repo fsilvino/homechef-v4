@@ -1,6 +1,8 @@
 package br.ufsc.ine5608.homechef.controller;
 
+import br.ufsc.ine5608.homechef.dto.DadosIngredienteReceita;
 import br.ufsc.ine5608.homechef.dto.DadosItemEstoque;
+import br.ufsc.ine5608.homechef.dto.DadosReceita;
 import br.ufsc.ine5608.homechef.model.ItemEstoque;
 import br.ufsc.ine5608.homechef.model.Unidade;
 import br.ufsc.ine5608.homechef.persistencia.ItemEstoqueDAO;
@@ -187,6 +189,18 @@ public class ControladorItemEstoque implements ITelaItemEstoqueObserver {
         itemEstoque.setIngrediente(dadosItemEstoque.ingrediente);
         itemEstoque.setValidade(dadosItemEstoque.validade);
         itemEstoque.setQuantidade(dadosItemEstoque.quantidade);
+    }
+    
+    public ArrayList<DadosItemEstoque> pesquisaItensEstoqueReceita(DadosReceita receita) {
+        ArrayList<DadosItemEstoque> resultado = new ArrayList<>();
+        for (DadosIngredienteReceita ingrediente : receita.ingredientes) {
+            for (DadosItemEstoque dadosItemEstoque : getListaDTO()) {
+                if (ingrediente.id == dadosItemEstoque.ingrediente.getId()) {
+                    resultado.add(dadosItemEstoque);
+                }
+            }
+        }
+        return resultado;
     }
 
 }

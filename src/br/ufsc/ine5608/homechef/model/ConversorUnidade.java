@@ -13,6 +13,8 @@ import java.io.Serializable;
  */
 public class ConversorUnidade implements Serializable {
     
+    private static final long serialVersionUID = 2L;
+    
     protected Unidade subunidade;
     protected int quantidadeEquivalente;
     
