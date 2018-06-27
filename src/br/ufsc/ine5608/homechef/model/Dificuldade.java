@@ -4,10 +4,18 @@ import java.io.Serializable;
 
 public class Dificuldade implements Serializable {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     protected int id;
     protected String nome;
+
+    public Dificuldade() {
+    }
+
+    public Dificuldade(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 
     public int getId() {
         return id;
