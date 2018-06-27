@@ -23,3 +23,13 @@
 hs_err_pid*
 /build/
 /dist/
+
+nbproject/private/
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/ant.xml
+homechef-v4.iml
+nbproject/private/private.properties
+.idea/uiDesigner.xml

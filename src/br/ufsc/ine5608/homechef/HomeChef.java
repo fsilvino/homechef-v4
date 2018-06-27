@@ -5,9 +5,7 @@
  */
 package br.ufsc.ine5608.homechef;
 
-import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
-import br.ufsc.ine5608.homechef.controller.ControladorReceita;
-import br.ufsc.ine5608.homechef.view.MainForm;
+import br.ufsc.ine5608.homechef.controller.ControladorItemEstoque;
 
 /**
  *
@@ -16,10 +14,9 @@ import br.ufsc.ine5608.homechef.view.MainForm;
 public class HomeChef {
     
     public static void main(String[] args) {
-        //ControladorIngrediente.getInstance().inicia();
-        //ControladorReceita.getInstance().inicia();
-        MainForm homeChef = new MainForm();
-        homeChef.setVisible(true);
+        ControladorItemEstoque.getInstance().inicia();
+//        ControladorIngrediente.getInstance().inicia();
+//        ControladorReceita.getInstance().inicia();
     }
     
 }
