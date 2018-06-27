@@ -29,7 +29,7 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         this.receitas = new ArrayList<>();
         this.estoque = new ArrayList<>();
-        
+        setLocationRelativeTo(null);
     }
     
     public void setDados(List<DadosReceita> r, List<DadosItemEstoque> e) {
@@ -43,38 +43,32 @@ public class MainForm extends javax.swing.JFrame {
         atualizaTableItensEstoque();
     }
     
-       private synchronized void atualizaTableReceitas() {
-        
-        if (!this.receitas.isEmpty()) {
-            //CriaTableModel
-            DefaultTableModel dtmodelReceitas = new DefaultTableModel();
-            dtmodelReceitas.setColumnIdentifiers(new String[] {"Nome", "Tempo", "Dificuldade", "Possível", "Custo estimado"});
-            for (DadosReceita novoDados : this.receitas ) {
-                dtmodelReceitas.addRow(new String[] {novoDados.nome,
-                                            novoDados.tempo.toString(),
-                                            novoDados.dificuldade.getNome(),
-                                            "Impossiveeel",
-                                            "Custo"});
-            }
-            //Set table
-            this.tableReceitas.setModel(dtmodelReceitas);
+    private void atualizaTableReceitas() {
+        //CriaTableModel
+        DefaultTableModel dtmodelReceitas = new DefaultTableModel();
+        dtmodelReceitas.setColumnIdentifiers(new String[] {"Nome", "Tempo", "Dificuldade", "Possível", "Custo estimado"});
+        for (DadosReceita novoDados : this.receitas ) {
+            dtmodelReceitas.addRow(new String[] {novoDados.nome,
+                                        novoDados.tempo.toString(),
+                                        novoDados.dificuldade.getNome(),
+                                        "Impossiveeel",
+                                        "Custo"});
         }
+        //Set table
+        this.tableReceitas.setModel(dtmodelReceitas);
     }
     
-    private synchronized void atualizaTableItensEstoque() {
-         if (!this.estoque.isEmpty()) {
-            //CriaTableModel
-            DefaultTableModel dtmodelEstoque = new DefaultTableModel();
-            dtmodelEstoque.setColumnIdentifiers(new String[] {"Nome", "Quantidade", "Validade"});
-            for (DadosItemEstoque novoDados : this.estoque ) {
-                dtmodelEstoque.addRow(new String[] {novoDados.ingrediente.getNome(),
-                                            String.valueOf(novoDados.quantidade),
-                                            novoDados.validade.toString(),
-                                            });
-            }
-            //Set table
-            this.tableItemEstoque.setModel(dtmodelEstoque);
+    private void atualizaTableItensEstoque() {
+        DefaultTableModel dtmodelEstoque = new DefaultTableModel();
+        dtmodelEstoque.setColumnIdentifiers(new String[] {"Nome", "Quantidade", "Validade"});
+        for (DadosItemEstoque novoDados : this.estoque ) {
+            dtmodelEstoque.addRow(new String[] {novoDados.ingrediente.getNome(),
+                                        String.valueOf(novoDados.quantidade),
+                                        novoDados.validade.toString(),
+                                        });
         }
+        //Set table
+        this.tableItemEstoque.setModel(dtmodelEstoque);
     }
 
     /**
@@ -132,9 +126,7 @@ public class MainForm extends javax.swing.JFrame {
 
         tableItemEstoque.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Leite", "1 Litro", "10/05/2018"},
-                {"Farinha de Trigo", "1 Kg", "01/01/2019"},
-                {"Macarrão Instantâneo", "2 und", "05/03/2022"}
+
             },
             new String [] {
                 "Nome", "Qtd", "Validade"
@@ -148,9 +140,7 @@ public class MainForm extends javax.swing.JFrame {
 
         tableReceitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Pudim de Leite", "40 min", "Média", "Não", "R$ 10,00"},
-                {"Feijoada", "1h30min", "Fácil", "Sim", "R$ 15,00"},
-                {"Miojo", "5min", "Fácil", "Sim", "R$ 4,00"}
+
             },
             new String [] {
                 "Nome", "Tempo", "Dificuldade", "Possível", "Custo Estimado"

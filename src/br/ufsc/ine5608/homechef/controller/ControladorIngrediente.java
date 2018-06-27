@@ -69,6 +69,7 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
             copiaDadosParaIngrediente(dadosIngrediente, ingrediente);
             ingrediente.setId(getDao().getNextId());
             getDao().put(ingrediente.getId(), ingrediente);
+            ControladorPrincipal.getInstance().atualizaTelaPrincipal();
             telaCad.fechaTela();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaCad, e.getMessage());
@@ -82,6 +83,7 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
             if (ingrediente != null) {
                 copiaDadosParaIngrediente(dadosIngrediente, ingrediente); 
                 getDao().put(ingrediente.getId(), ingrediente);
+                ControladorPrincipal.getInstance().atualizaTelaPrincipal();
                 telaCad.fechaTela();
             } else {
                 throw new Exception("Ingrediente não cadastrado!");
@@ -116,6 +118,8 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
             }
 
             getDao().remove(ingrediente.getId());
+            
+            ControladorPrincipal.getInstance().atualizaTelaPrincipal();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(telaTb, e.getMessage());
         }
