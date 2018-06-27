@@ -53,18 +53,25 @@ public class ControladorUnidade {
     
     public ArrayList<Unidade> getUnidadesRelacionadas(int idUnidade) {
         ArrayList<Unidade> relacionadas = new ArrayList<>();
-        
-        for (Unidade unidade : getList()) {
-            if (unidade.getId() == idUnidade || unidade.getConversores().containsKey(idUnidade)) {
-                relacionadas.add(unidade);
+//        if (getUnidadesBase().stream().anyMatch(unidade -> unidade.getId() == idUnidade)) {
+            for (Unidade unidade : getList()) {
+                if (unidade.getId() == idUnidade || unidade.getConversores().containsKey(idUnidade)) {
+                    relacionadas.add(unidade);
+                }
             }
-        }
-        
+//        }
+//        else {
+//            relacionadas.add(get(idUnidade));
+//            for (ConversorUnidade conversorUnidade : get(idUnidade).getConversores().values()) {
+//                relacionadas.add(conversorUnidade.getSubunidade());
+//            }
+//        }
+
         return relacionadas;
     }
 
     public Unidade getUnidadeBase(Unidade unidade) {
-        Optional<Unidade> unidadeBase = ControladorUnidade.getInstance().getUnidadesBase()
+        Optional<Unidade> unidadeBase = getUnidadesBase()
                 .stream()
                 .filter(un -> un.getId() == unidade.getId() || unidade.getConversores().containsKey(un.getId())).findFirst();
         return unidadeBase.orElse(null);
@@ -72,10 +79,10 @@ public class ControladorUnidade {
 
     public int getQuantidadeEquivalenteBase(Unidade unidade, int quantidade) throws Exception {
         Unidade unidadeBase = getUnidadeBase(unidade);
-        if (!unidade.getUnidade().equals(unidadeBase.getUnidade())) {
-            quantidade = unidade.getQuantidadeEquivalente(unidadeBase) * quantidade;
+        if (unidadeBase.getId() != unidade.getId()) {
+            return unidade.getQuantidadeEquivalente(unidadeBase) * quantidade;
         }
         return quantidade;
     }
-    
+
 }

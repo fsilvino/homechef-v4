@@ -175,11 +175,12 @@
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="txtValidade">
       <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="1"/>
-        </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField()"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="try {&#xa;    new MaskFormatter(&quot;##/##/####&quot;).install(txtValidade);&#xa;} catch (ParseException e) {&#xa;}"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="txtIngrediente">
       <Events>
