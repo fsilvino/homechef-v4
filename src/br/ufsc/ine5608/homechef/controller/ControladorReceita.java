@@ -140,7 +140,7 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
     }
 
     @Override
-    protected List<DadosReceita> getListaDTO() {
+    public List<DadosReceita> getListaDTO() {
         ArrayList<DadosReceita> lista = new ArrayList<>();
         for (Receita receita : getDao().getList()) {
             lista.add(receita.getDTO());
