@@ -1,5 +1,7 @@
 package br.ufsc.ine5608.homechef.model;
 
+import br.ufsc.ine5608.homechef.dto.DadosItemEstoque;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -51,5 +53,9 @@ public class ItemEstoque implements Serializable {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public DadosItemEstoque getDTO() {
+        return new DadosItemEstoque(id, unidade, ingrediente, validade, quantidade);
     }
 }

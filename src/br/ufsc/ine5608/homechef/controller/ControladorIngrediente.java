@@ -5,10 +5,11 @@ import br.ufsc.ine5608.homechef.model.Ingrediente;
 import br.ufsc.ine5608.homechef.persistencia.IngredienteDAO;
 import br.ufsc.ine5608.homechef.view.FmCadastrarIngrediente;
 import br.ufsc.ine5608.homechef.view.FmListarIngredientes;
+import javax.swing.*;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  * Responsável pelo controle de cadastro dos ingredientes
@@ -170,5 +171,8 @@ public class ControladorIngrediente extends ControladorCadastro<FmListarIngredie
         ingrediente.setUnidade(dadosIngrediente.unidade);
         ingrediente.setUnidadePreco(dadosIngrediente.unidadePreco);
     }
-    
+
+    public Collection<Ingrediente> getIngredientes() {
+        return getDao().getList();
+    }
 }

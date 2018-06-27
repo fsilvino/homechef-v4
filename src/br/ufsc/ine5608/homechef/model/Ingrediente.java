@@ -65,5 +65,9 @@ public class Ingrediente implements Serializable {
     public DadosIngrediente getDTO() {
         return new DadosIngrediente(id, nome, preco, unidade, unidadePreco, quantidadePreco);
     }
-    
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

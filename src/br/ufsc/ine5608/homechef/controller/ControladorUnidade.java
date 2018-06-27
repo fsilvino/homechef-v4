@@ -7,8 +7,10 @@ package br.ufsc.ine5608.homechef.controller;
 
 import br.ufsc.ine5608.homechef.model.Unidade;
 import br.ufsc.ine5608.homechef.persistencia.UnidadeDAO;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  *
@@ -59,6 +61,21 @@ public class ControladorUnidade {
         }
         
         return relacionadas;
+    }
+
+    public Unidade getUnidadeBase(Unidade unidade) {
+        Optional<Unidade> unidadeBase = ControladorUnidade.getInstance().getUnidadesBase()
+                .stream()
+                .filter(un -> un.getId() == unidade.getId() || unidade.getConversores().containsKey(un.getId())).findFirst();
+        return unidadeBase.orElse(null);
+    }
+
+    public int getQuantidadeEquivalenteBase(Unidade unidade, int quantidade) throws Exception {
+        Unidade unidadeBase = getUnidadeBase(unidade);
+        if (!unidade.getUnidade().equals(unidadeBase.getUnidade())) {
+            quantidade = unidade.getQuantidadeEquivalente(unidadeBase) * quantidade;
+        }
+        return quantidade;
     }
     
 }

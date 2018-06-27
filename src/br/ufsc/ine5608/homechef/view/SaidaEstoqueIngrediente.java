@@ -5,11 +5,24 @@
  */
 package br.ufsc.ine5608.homechef.view;
 
+import br.ufsc.ine5608.homechef.controller.ControladorUnidade;
+import br.ufsc.ine5608.homechef.dto.DadosItemEstoque;
+import br.ufsc.ine5608.homechef.model.Unidade;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- *
  * @author Flávio
  */
 public class SaidaEstoqueIngrediente extends javax.swing.JFrame {
+
+    private ITelaItemEstoqueObserver observer;
+    private List<DadosItemEstoque> list;
+
 
     /**
      * Creates new form SaidaEstoqueIngrediente
@@ -27,41 +40,53 @@ public class SaidaEstoqueIngrediente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lbIngrediente = new javax.swing.JLabel();
+        txtIngrediente = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tbItemEstoque = new javax.swing.JTable();
+        lbQuantidade = new javax.swing.JLabel();
+        spQuantidade = new javax.swing.JSpinner();
+        cbUnidade = new javax.swing.JComboBox<>();
+        btCancela = new javax.swing.JButton();
+        btRetira = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Retirar Ingrediente do Estoque");
 
-        jLabel1.setText("Ingrediente:");
+        lbIngrediente.setText("Ingrediente:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Leite", "800 ml", "10/04/2018"},
-                {"Macarrão Instantâneo", "10 und", "04/08/2019"},
-                {"Extrato de Tomate", "2 latas", "10/04/2018"},
-                {"Alho", "2 und", "17/05/2018"}
-            },
-            new String [] {
-                "Ingrediente", "Quantidade", "Validade"
+        txtIngrediente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIngredienteKeyReleased(evt);
             }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        });
 
-        jLabel3.setText("Quantidade:");
+        tbItemEstoque.setModel(new ItemEstoqueTableModel()
+        );
+        tbItemEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbItemEstoqueMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tbItemEstoque);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ML", "L", "G", "KG", "XÍCARA (240ml / 165g)", "COPO (250ml / 212g)" }));
+        lbQuantidade.setText("Quantidade:");
 
-        jButton1.setText("Cancela");
+        cbUnidade.setModel(new UnidadeComboModel());
 
-        jButton2.setText("Retirar do Estoque");
+        btCancela.setText("Cancela");
+        btCancela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelaActionPerformed(evt);
+            }
+        });
+
+        btRetira.setText("Retirar do Estoque");
+        btRetira.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRetiraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,21 +97,21 @@ public class SaidaEstoqueIngrediente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lbIngrediente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1))
+                        .addComponent(txtIngrediente))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(lbQuantidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btRetira)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(btCancela)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -94,34 +119,231 @@ public class SaidaEstoqueIngrediente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbIngrediente)
+                    .addComponent(txtIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbQuantidade)
+                    .addComponent(spQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btCancela)
+                    .addComponent(btRetira))
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtIngredienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIngredienteKeyReleased
+        List<DadosItemEstoque> dadosItemEstoques = filtraIngrediente();
+        getTableModel().setLista(dadosItemEstoques);
+    }//GEN-LAST:event_txtIngredienteKeyReleased
+
+    private void btCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelaActionPerformed
+        setVisible(false);
+        limpaTela();
+    }//GEN-LAST:event_btCancelaActionPerformed
+
+    private void tbItemEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbItemEstoqueMouseClicked
+        setaUnidadeRelacionada();
+    }//GEN-LAST:event_tbItemEstoqueMouseClicked
+
+    private void btRetiraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRetiraActionPerformed
+        retirar();
+    }//GEN-LAST:event_btRetiraActionPerformed
+
+    public void setObserver(ITelaItemEstoqueObserver observer) {
+        this.observer = observer;
+    }
+
+    public void setListaItemEstoque(List<DadosItemEstoque> listaDTO) {
+        list = listaDTO;
+        getTableModel().limpar();
+        getTableModel().setLista(list);
+    }
+
+    public DadosItemEstoque getDados() {
+        if (tbItemEstoque.getSelectedRow() > -1) {
+            return getTableModel().getItemEstoque(tbItemEstoque.getSelectedRow());
+        }
+        return null;
+    }
+
+    private List<DadosItemEstoque> filtraIngrediente() {
+        return list.stream()
+                .filter(itemEstoque -> itemEstoque.ingrediente.getNome().contains(txtIngrediente.getText().toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    private Unidade getUnidadeSelecionada() {
+        int selectedIndex = getComboUnidade().getSelectedIndex();
+        if (selectedIndex > -1) {
+            return getComboUnidadeModel().getElementAt(selectedIndex);
+        }
+        return null;
+    }
+
+    private JTable getTable() {
+        return tbItemEstoque;
+    }
+
+    private ItemEstoqueTableModel getTableModel() {
+        return (ItemEstoqueTableModel) getTable().getModel();
+    }
+
+    private JComboBox getComboUnidade() {
+        return cbUnidade;
+    }
+
+
+    private UnidadeComboModel getComboUnidadeModel() {
+        return (UnidadeComboModel) getComboUnidade().getModel();
+    }
+
+    private void setaUnidadeRelacionada() {
+        DadosItemEstoque dadosItemEstoque = getDados();
+        if (dadosItemEstoque != null) {
+            ArrayList<Unidade> unidadesRelacionadas = ControladorUnidade.getInstance().getUnidadesRelacionadas(dadosItemEstoque.unidade.getId());
+            getComboUnidadeModel().setLista(unidadesRelacionadas);
+            getComboUnidade().setSelectedIndex(-1);
+        }
+    }
+
+    private void limpaTela() {
+        txtIngrediente.setText("");
+        cbUnidade.setModel(new UnidadeComboModel());
+        tbItemEstoque.setModel(new ItemEstoqueTableModel());
+        spQuantidade.setValue(0);
+    }
+
+    private void retirar() {
+        if (observer != null) {
+            observer.salvaSaida((Integer) spQuantidade.getValue(), getUnidadeSelecionada());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btCancela;
+    private javax.swing.JButton btRetira;
+    private javax.swing.JComboBox<String> cbUnidade;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbIngrediente;
+    private javax.swing.JLabel lbQuantidade;
+    private javax.swing.JSpinner spQuantidade;
+    private javax.swing.JTable tbItemEstoque;
+    private javax.swing.JTextField txtIngrediente;
     // End of variables declaration//GEN-END:variables
+
+    private class ItemEstoqueTableModel extends AbstractTableModel {
+
+        private List<DadosItemEstoque> itensEstoque;
+
+        private String[] colunas = new String[]{
+                "Ingrediente", "Quantidade", "Validade"
+        };
+
+        public ItemEstoqueTableModel() {
+            this.itensEstoque = new ArrayList<>();
+        }
+
+        public ItemEstoqueTableModel(List<DadosItemEstoque> itensEstoque) {
+            this.itensEstoque = itensEstoque;
+        }
+
+        @Override
+        public int getRowCount() {
+            return itensEstoque.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return colunas.length;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
+            return colunas[columnIndex];
+        }
+
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            return String.class;
+        }
+
+        private void addItensEstoque(List<DadosItemEstoque> dadosItensEstoque) {
+            itensEstoque.addAll(dadosItensEstoque);
+            int ultimoIndice = getRowCount() - 1;
+            fireTableRowsInserted(ultimoIndice, ultimoIndice);
+        }
+
+        private void setLista(List<DadosItemEstoque> dadosItensEstoque) {
+            itensEstoque = dadosItensEstoque;
+            int ultimoIndice = getRowCount() - 1;
+            fireTableRowsInserted(ultimoIndice, ultimoIndice);
+        }
+
+        public void removeItemEstoque(int indiceLinha) {
+            itensEstoque.remove(indiceLinha);
+            fireTableRowsDeleted(indiceLinha, indiceLinha);
+        }
+
+        public void limpar() {
+            itensEstoque.clear();
+            fireTableDataChanged();
+        }
+
+        public DadosItemEstoque getItemEstoque(int row) {
+            return itensEstoque.get(row);
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            DadosItemEstoque itemEstoque = itensEstoque.get(rowIndex);
+            String valueObject = null;
+            switch (columnIndex) {
+                case 0:
+                    valueObject = itemEstoque.ingrediente.getNome();
+                    break;
+                case 1:
+                    valueObject = itemEstoque.quantidade + " " + (itemEstoque.quantidade > 1 ? itemEstoque.unidade.getNomePlural().toLowerCase() : itemEstoque.unidade.getNomeSingular());
+                    break;
+                case 2:
+                    valueObject = itemEstoque.validade == null ? "" : itemEstoque.validade.toString();
+                    break;
+                default:
+                    System.err.println("Índice inválido para propriedade do bean ItemEstoque.class");
+            }
+            return valueObject;
+        }
+    }
+
+    private class UnidadeComboModel extends DefaultComboBoxModel {
+
+        private List<Unidade> unidades;
+
+        public UnidadeComboModel() {
+            this.unidades = new ArrayList<>();
+        }
+
+        @Override
+        public int getSize() {
+            return unidades.size();
+        }
+
+        @Override
+        public Unidade getElementAt(int index) {
+            return unidades.get(index);
+        }
+
+        public void setLista(ArrayList<Unidade> unidades) {
+            int tamanhoAntigo = getSize();
+            this.unidades = unidades;
+            fireContentsChanged(unidades, tamanhoAntigo, getSize() - 1);
+        }
+    }
 }
