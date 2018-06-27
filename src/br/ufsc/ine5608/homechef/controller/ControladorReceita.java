@@ -13,6 +13,7 @@ import br.ufsc.ine5608.homechef.persistencia.IngredienteDAO;
 import br.ufsc.ine5608.homechef.persistencia.ReceitaDAO;
 import br.ufsc.ine5608.homechef.view.FmListarReceitas;
 import br.ufsc.ine5608.homechef.view.FmCadastrarReceita;
+import br.ufsc.ine5608.homechef.view.PrepararReceita;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,12 @@ import javax.swing.JOptionPane;
 public class ControladorReceita extends ControladorCadastro<FmListarReceitas, FmCadastrarReceita, ReceitaDAO, Receita, DadosReceita> {
 
     private static ControladorReceita instance;
+    private PrepararReceita fmPrepararReceita;
     
     private ControladorReceita() {
         super();
+        fmPrepararReceita = new PrepararReceita();
+        fmPrepararReceita.setVisible(false);
     }
     
     public static ControladorReceita getInstance() {
@@ -170,6 +174,11 @@ public class ControladorReceita extends ControladorCadastro<FmListarReceitas, Fm
             }
         }
         return false;
+    }
+    
+    public void abrePepararReceita(DadosReceita receita) {
+        fmPrepararReceita.setDados(receita);
+        fmPrepararReceita.setVisible(true);
     }
     
 }

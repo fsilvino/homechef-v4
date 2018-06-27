@@ -181,31 +181,11 @@
         <Component class="javax.swing.JTable" name="tableIngredientesEstoque">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="Usar" type="java.lang.Boolean">
-                  <Data value="true"/>
-                  <Data value="true"/>
-                  <Data value="true"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Ingrediente" type="java.lang.Object">
-                  <Data value="&#xc1;gua"/>
-                  <Data value="Macarr&#xe3;o Instant&#xe2;neo"/>
-                  <Data value="Extrato de Tomate"/>
-                  <Data value="Extrato de Tomate"/>
-                </Column>
-                <Column editable="true" title="Quantidade" type="java.lang.Object">
-                  <Data value="2 L"/>
-                  <Data value="10 und"/>
-                  <Data value="2 latas"/>
-                  <Data value="1 lata"/>
-                </Column>
-                <Column editable="true" title="Validade" type="java.lang.Object">
-                  <Data value="10/04/2018"/>
-                  <Data value="04/08/2019"/>
-                  <Data value="10/04/2018"/>
-                  <Data value="25/08/2018"/>
-                </Column>
+              <Table columnCount="4" rowCount="0">
+                <Column editable="true" title="Usar" type="java.lang.Boolean"/>
+                <Column editable="true" title="Ingrediente" type="java.lang.Object"/>
+                <Column editable="true" title="Quantidade" type="java.lang.Object"/>
+                <Column editable="true" title="Validade" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

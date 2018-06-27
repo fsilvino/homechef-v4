@@ -99,10 +99,7 @@ public class PrepararReceita extends javax.swing.JFrame {
 
         tableIngredientesEstoque.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Boolean(true), "Água", "2 L", "10/04/2018"},
-                { new Boolean(true), "Macarrão Instantâneo", "10 und", "04/08/2019"},
-                { new Boolean(true), "Extrato de Tomate", "2 latas", "10/04/2018"},
-                {null, "Extrato de Tomate", "1 lata", "25/08/2018"}
+
             },
             new String [] {
                 "Usar", "Ingrediente", "Quantidade", "Validade"
