@@ -11,6 +11,7 @@ import br.ufsc.ine5608.homechef.model.Unidade;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -208,7 +209,7 @@ public class SaidaEstoqueIngrediente extends javax.swing.JFrame {
     private void setaUnidadeRelacionada() {
         DadosItemEstoque dadosItemEstoque = getDados();
         if (dadosItemEstoque != null) {
-            ArrayList<Unidade> unidadesRelacionadas = ControladorUnidade.getInstance().getUnidadesRelacionadas(dadosItemEstoque.unidade.getId());
+            ArrayList<Unidade> unidadesRelacionadas = ControladorUnidade.getInstance().getUnidadesRelacionadas(ControladorUnidade.getInstance().getUnidadeBase(dadosItemEstoque.unidade).getId());
             getComboUnidadeModel().setLista(unidadesRelacionadas);
             getComboUnidade().setSelectedIndex(-1);
         }
@@ -313,7 +314,7 @@ public class SaidaEstoqueIngrediente extends javax.swing.JFrame {
                     valueObject = itemEstoque.quantidade + " " + (itemEstoque.quantidade > 1 ? itemEstoque.unidade.getNomePlural().toLowerCase() : itemEstoque.unidade.getNomeSingular());
                     break;
                 case 2:
-                    valueObject = itemEstoque.validade == null ? "" : itemEstoque.validade.toString();
+                    valueObject = itemEstoque.validade == null ? "" : itemEstoque.validade.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                     break;
                 default:
                     System.err.println("Índice inválido para propriedade do bean ItemEstoque.class");
