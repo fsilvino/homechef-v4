@@ -23,7 +23,7 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
     public FmCadastrarReceita() {
         ingredientesReceita = new ArrayList<>();
         
-        fmIngredienteReceita = new FmCadastroIngredienteReceita();
+        fmIngredienteReceita = new FmCadastroIngredienteReceita(this);
         fmIngredienteReceita.setVisible(false);
     }
 
@@ -333,15 +333,42 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
     }
     
     private void abreInclusaoIngredienteReceita() {
-        
+        fmIngredienteReceita.setDados(new DadosIngredienteReceita());
+        fmIngredienteReceita.setVisible(true);
+    }
+    
+    private boolean validaIngredienteDuplicado(DadosIngredienteReceita ingredienteReceita) {
+        for (DadosIngredienteReceita dadosIngredienteReceita : ingredientesReceita) {
+            if (dadosIngredienteReceita != ingredienteReceita && dadosIngredienteReceita.ingrediente.id == ingredienteReceita.ingrediente.id) {
+                JOptionPane.showMessageDialog(null, "Este ingrediente já foi incluído na receita! Altere a quantidade.");
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public void incluirIngrediente(DadosIngredienteReceita ingredienteReceita) {
+        if (validaIngredienteDuplicado(ingredienteReceita)) {
+            this.ingredientesReceita.add(ingredienteReceita);
+            ((IngredientesReceitaTableModel)tableIngredientes.getModel()).addIngredienteReceita(ingredienteReceita);
+            fmIngredienteReceita.setVisible(false);
+        }
     }
 
     private void abreAlteracaoIngredienteReceita() {
         DadosIngredienteReceita ingredienteReceita = getIngredienteReceitaSelecionado();
         if (ingredienteReceita != null) {
-            
+            fmIngredienteReceita.setDados(ingredienteReceita);
+            fmIngredienteReceita.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum ingrediente selecionado!");
+        }
+    }
+    
+    public void alterarIngrediente(DadosIngredienteReceita ingredienteReceita) {
+        if (validaIngredienteDuplicado(ingredienteReceita)) {
+            ((IngredientesReceitaTableModel)tableIngredientes.getModel()).fireTableDataChanged();
+            fmIngredienteReceita.setVisible(false);
         }
     }
 
@@ -417,7 +444,7 @@ public class FmCadastrarReceita extends FmBaseCadastro<DadosReceita> {
             String valueObject = null;
             switch (columnIndex) {
                 case 0:
-                    valueObject = "" + ingredienteReceita.quantidade;
+                    valueObject = ingredienteReceita.quantidade + " " + (ingredienteReceita.quantidade > 1 ? ingredienteReceita.unidade.getNomePlural() : ingredienteReceita.unidade.getNomeSingular());
                     break;
                 case 1:
                     valueObject = ingredienteReceita.ingrediente.nome;
