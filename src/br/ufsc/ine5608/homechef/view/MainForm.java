@@ -7,12 +7,15 @@ package br.ufsc.ine5608.homechef.view;
 
 import br.ufsc.ine5608.homechef.controller.ControladorIngrediente;
 import br.ufsc.ine5608.homechef.controller.ControladorItemEstoque;
+import br.ufsc.ine5608.homechef.controller.ControladorPrincipal;
 import br.ufsc.ine5608.homechef.controller.ControladorReceita;
 import br.ufsc.ine5608.homechef.dto.DadosItemEstoque;
 import br.ufsc.ine5608.homechef.dto.DadosReceita;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ItemEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,10 +35,14 @@ public class MainForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
-    public void setDados(List<DadosReceita> r, List<DadosItemEstoque> e) {
-        this.receitas = r;
+    public void setItensEstoque(List<DadosItemEstoque> e) {
         this.estoque = e;
-        atualizaTabelas();
+        atualizaTableItensEstoque();
+    }
+    
+    public void setReceitas(List<DadosReceita> r) {
+        this.receitas = r;
+        atualizaTableReceitas();
     }
     
     private void atualizaTabelas() {
@@ -69,6 +76,10 @@ public class MainForm extends javax.swing.JFrame {
         }
         //Set table
         this.tableItemEstoque.setModel(dtmodelEstoque);
+    }
+    
+    public int getIndexDificuldade() {
+        return cbDificuldadeReceita.getSelectedIndex();
     }
 
     /**
@@ -161,6 +172,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel2.setText("Receitas:");
 
         cbDificuldadeReceita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Fácil", "Média", "Difícil" }));
+        cbDificuldadeReceita.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbDificuldadeReceitaItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("Dificuldade:");
 
@@ -177,6 +193,11 @@ public class MainForm extends javax.swing.JFrame {
         ckbFiltraItensVencendoEm10Dias.setText("Listar ingredientes que vencerão em 10 dias");
 
         btPrepararReceitaSelecionada.setText("Preparar Receita Selecionada");
+        btPrepararReceitaSelecionada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPrepararReceitaSelecionadaActionPerformed(evt);
+            }
+        });
 
         btGerarListaCompras.setText("Gerar Lista de Compras");
 
@@ -318,7 +339,21 @@ public class MainForm extends javax.swing.JFrame {
         ControladorItemEstoque.getInstance().abreTelaEntradaEstoque();
     }//GEN-LAST:event_smenuEstoqueEntradaActionPerformed
 
-    private void smenuEstoqueSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smenuEstoqueSaidaActionPerformed
+    private void cbDificuldadeReceitaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbDificuldadeReceitaItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            ControladorPrincipal.getInstance().atualizaReceitas();
+        }
+    }//GEN-LAST:event_cbDificuldadeReceitaItemStateChanged
+
+    private void btPrepararReceitaSelecionadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrepararReceitaSelecionadaActionPerformed
+        if (tableReceitas.getSelectedRow() > -1) {
+            ControladorReceita.getInstance().abrePepararReceita(receitas.get(tableReceitas.getSelectedRow()));
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma receita!");
+        }
+    }//GEN-LAST:event_btPrepararReceitaSelecionadaActionPerformed
+
+  private void smenuEstoqueSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smenuEstoqueSaidaActionPerformed
         ControladorItemEstoque.getInstance().abreTelaSaidaEstoque();
     }//GEN-LAST:event_smenuEstoqueSaidaActionPerformed
 
